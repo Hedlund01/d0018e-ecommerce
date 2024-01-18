@@ -1,0 +1,218 @@
+<svg width="770" height="948" viewBox="0 0 577.5 711" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="translate(4,575) scale(1)">
+<title>G</title>
+<polygon fill="transparent" stroke="transparent" points="-4,4 -4,-575 705,-575 705,4 -4,4"></polygon>
+<!-- verification_token -->
+<g id="node1" class="node">
+<title>verification_token</title>
+<polygon fill="#232d95" stroke="transparent" points="45.5,-54 45.5,-72 229.5,-72 229.5,-54 45.5,-54"></polygon>
+<polygon fill="none" stroke="white" points="45.5,-54 45.5,-72 229.5,-72 229.5,-54 45.5,-54"></polygon>
+<text text-anchor="start" x="48.5" y="-61" font-family="opensans" font-weight="bold" font-size="10.00" fill="white">verification_token</text>
+<polygon fill="#404040" stroke="transparent" points="45.5,-36 45.5,-54 229.5,-54 229.5,-36 45.5,-36"></polygon>
+<polygon fill="none" stroke="white" points="45.5,-36 45.5,-54 229.5,-54 229.5,-36 45.5,-36"></polygon>
+<text text-anchor="start" x="48.5" y="-42" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;identifier TEXT NOT NULL</text>
+<polygon fill="#404040" stroke="transparent" points="45.5,-18 45.5,-36 229.5,-36 229.5,-18 45.5,-18"></polygon>
+<polygon fill="none" stroke="white" points="45.5,-18 45.5,-36 229.5,-36 229.5,-18 45.5,-18"></polygon>
+<text text-anchor="start" x="48.22" y="-24" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;expires TIMESTAMPTZ NOT NULL</text>
+<polygon fill="#404040" stroke="transparent" points="45.5,0 45.5,-18 229.5,-18 229.5,0 45.5,0"></polygon>
+<polygon fill="none" stroke="white" points="45.5,0 45.5,-18 229.5,-18 229.5,0 45.5,0"></polygon>
+<text text-anchor="start" x="48.5" y="-6" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;token TEXT NOT NULL</text>
+</g>
+<!-- accounts -->
+<g id="node2" class="node">
+<title>accounts</title>
+<polygon fill="#232d95" stroke="transparent" points="21.5,-553 21.5,-571 253.5,-571 253.5,-553 21.5,-553"></polygon>
+<polygon fill="none" stroke="white" points="21.5,-553 21.5,-571 253.5,-571 253.5,-553 21.5,-553"></polygon>
+<text text-anchor="start" x="24.5" y="-560" font-family="opensans" font-weight="bold" font-size="10.00" fill="white">accounts</text>
+<polygon fill="#404040" stroke="transparent" points="21.5,-535 21.5,-553 253.5,-553 253.5,-535 21.5,-535"></polygon>
+<polygon fill="none" stroke="white" points="21.5,-535 21.5,-553 253.5,-553 253.5,-535 21.5,-535"></polygon>
+<text text-anchor="start" x="24.5" y="-542" font-family="opensans" font-size="10.00" fill="#e2c044">PK </text>
+<text text-anchor="start" x="39.78" y="-542" font-family="opensans" font-size="10.00"> | </text>
+<text text-anchor="start" x="46.78" y="-542" font-family="opensans" font-size="10.00" fill="white"> id SERIAL</text>
+<polygon fill="#404040" stroke="transparent" points="21.5,-517 21.5,-535 253.5,-535 253.5,-517 21.5,-517"></polygon>
+<polygon fill="none" stroke="white" points="21.5,-517 21.5,-535 253.5,-535 253.5,-517 21.5,-517"></polygon>
+<text text-anchor="start" x="24.5" y="-523" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;type VARCHAR(255) NOT NULL</text>
+<polygon fill="#404040" stroke="transparent" points="21.5,-499 21.5,-517 253.5,-517 253.5,-499 21.5,-499"></polygon>
+<polygon fill="none" stroke="white" points="21.5,-499 21.5,-517 253.5,-517 253.5,-499 21.5,-499"></polygon>
+<text text-anchor="start" x="24.5" y="-505" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;provider VARCHAR(255) NOT NULL</text>
+<polygon fill="#404040" stroke="transparent" points="21.5,-481 21.5,-499 253.5,-499 253.5,-481 21.5,-481"></polygon>
+<polygon fill="none" stroke="white" points="21.5,-481 21.5,-499 253.5,-499 253.5,-481 21.5,-481"></polygon>
+<text text-anchor="start" x="24.34" y="-487" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;providerAccountId VARCHAR(255) NOT NULL</text>
+<polygon fill="#404040" stroke="transparent" points="21.5,-463 21.5,-481 253.5,-481 253.5,-463 21.5,-463"></polygon>
+<polygon fill="none" stroke="white" points="21.5,-463 21.5,-481 253.5,-481 253.5,-463 21.5,-463"></polygon>
+<text text-anchor="start" x="24.5" y="-469" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;refresh_token TEXT</text>
+<polygon fill="#404040" stroke="transparent" points="21.5,-445 21.5,-463 253.5,-463 253.5,-445 21.5,-445"></polygon>
+<polygon fill="none" stroke="white" points="21.5,-445 21.5,-463 253.5,-463 253.5,-445 21.5,-445"></polygon>
+<text text-anchor="start" x="24.5" y="-451" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;access_token TEXT</text>
+<polygon fill="#404040" stroke="transparent" points="21.5,-427 21.5,-445 253.5,-445 253.5,-427 21.5,-427"></polygon>
+<polygon fill="none" stroke="white" points="21.5,-427 21.5,-445 253.5,-445 253.5,-427 21.5,-427"></polygon>
+<text text-anchor="start" x="24.5" y="-433" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;expires_at BIGINT</text>
+<polygon fill="#404040" stroke="transparent" points="21.5,-409 21.5,-427 253.5,-427 253.5,-409 21.5,-409"></polygon>
+<polygon fill="none" stroke="white" points="21.5,-409 21.5,-427 253.5,-427 253.5,-409 21.5,-409"></polygon>
+<text text-anchor="start" x="24.5" y="-415" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;id_token TEXT</text>
+<polygon fill="#404040" stroke="transparent" points="21.5,-391 21.5,-409 253.5,-409 253.5,-391 21.5,-391"></polygon>
+<polygon fill="none" stroke="white" points="21.5,-391 21.5,-409 253.5,-409 253.5,-391 21.5,-391"></polygon>
+<text text-anchor="start" x="24.5" y="-397" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;scope TEXT</text>
+<polygon fill="#404040" stroke="transparent" points="21.5,-373 21.5,-391 253.5,-391 253.5,-373 21.5,-373"></polygon>
+<polygon fill="none" stroke="white" points="21.5,-373 21.5,-391 253.5,-391 253.5,-373 21.5,-373"></polygon>
+<text text-anchor="start" x="24.5" y="-379" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;session_state TEXT</text>
+<polygon fill="#404040" stroke="transparent" points="21.5,-355 21.5,-373 253.5,-373 253.5,-355 21.5,-355"></polygon>
+<polygon fill="none" stroke="white" points="21.5,-355 21.5,-373 253.5,-373 253.5,-355 21.5,-355"></polygon>
+<text text-anchor="start" x="24.5" y="-361" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;token_type TEXT</text>
+<polygon fill="#404040" stroke="transparent" points="21.5,-337 21.5,-355 253.5,-355 253.5,-337 21.5,-337"></polygon>
+<polygon fill="none" stroke="white" points="21.5,-337 21.5,-355 253.5,-355 253.5,-337 21.5,-337"></polygon>
+<text text-anchor="start" x="24.5" y="-344" font-family="opensans" font-size="10.00" fill="#e2c044">FK </text>
+<text text-anchor="start" x="39.78" y="-344" font-family="opensans" font-size="10.00"> | </text>
+<text text-anchor="start" x="46.78" y="-344" font-family="opensans" font-size="10.00" fill="white"> userId SERIAL NOT NULL</text>
+</g>
+<!-- users -->
+<g id="node4" class="node">
+<title>users</title>
+<polygon fill="#232d95" stroke="transparent" points="320.5,-274 320.5,-292 479.5,-292 479.5,-274 320.5,-274"></polygon>
+<polygon fill="none" stroke="white" points="320.5,-274 320.5,-292 479.5,-292 479.5,-274 320.5,-274"></polygon>
+<text text-anchor="start" x="323.5" y="-281" font-family="opensans" font-weight="bold" font-size="10.00" fill="white">users</text>
+<polygon fill="#404040" stroke="transparent" points="320.5,-256 320.5,-274 479.5,-274 479.5,-256 320.5,-256"></polygon>
+<polygon fill="none" stroke="white" points="320.5,-256 320.5,-274 479.5,-274 479.5,-256 320.5,-256"></polygon>
+<text text-anchor="start" x="323.5" y="-263" font-family="opensans" font-size="10.00" fill="#e2c044">PK </text>
+<text text-anchor="start" x="338.78" y="-263" font-family="opensans" font-size="10.00"> | </text>
+<text text-anchor="start" x="345.78" y="-263" font-family="opensans" font-size="10.00" fill="white"> id SERIAL</text>
+<polygon fill="#404040" stroke="transparent" points="320.5,-238 320.5,-256 479.5,-256 479.5,-238 320.5,-238"></polygon>
+<polygon fill="none" stroke="white" points="320.5,-238 320.5,-256 479.5,-256 479.5,-238 320.5,-238"></polygon>
+<text text-anchor="start" x="323.5" y="-244" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;name VARCHAR(255)</text>
+<polygon fill="#404040" stroke="transparent" points="320.5,-220 320.5,-238 479.5,-238 479.5,-220 320.5,-220"></polygon>
+<polygon fill="none" stroke="white" points="320.5,-220 320.5,-238 479.5,-238 479.5,-220 320.5,-220"></polygon>
+<text text-anchor="start" x="323.5" y="-226" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;email VARCHAR(255)</text>
+<polygon fill="#404040" stroke="transparent" points="320.5,-202 320.5,-220 479.5,-220 479.5,-202 320.5,-202"></polygon>
+<polygon fill="none" stroke="white" points="320.5,-202 320.5,-220 479.5,-220 479.5,-202 320.5,-202"></polygon>
+<text text-anchor="start" x="323.49" y="-208" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;emailVerified TIMESTAMPTZ</text>
+<polygon fill="#404040" stroke="transparent" points="320.5,-184 320.5,-202 479.5,-202 479.5,-184 320.5,-184"></polygon>
+<polygon fill="none" stroke="white" points="320.5,-184 320.5,-202 479.5,-202 479.5,-184 320.5,-184"></polygon>
+<text text-anchor="start" x="323.5" y="-190" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;image TEXT</text>
+<polygon fill="#404040" stroke="transparent" points="320.5,-166 320.5,-184 479.5,-184 479.5,-166 320.5,-166"></polygon>
+<polygon fill="none" stroke="white" points="320.5,-166 320.5,-184 479.5,-184 479.5,-166 320.5,-166"></polygon>
+<text text-anchor="start" x="323.5" y="-173" font-family="opensans" font-size="10.00" fill="#e2c044">FK </text>
+<text text-anchor="start" x="338.78" y="-173" font-family="opensans" font-size="10.00"> | </text>
+<text text-anchor="start" x="345.78" y="-173" font-family="opensans" font-size="10.00" fill="white"> roleId SERIAL NOT NULL</text>
+</g>
+<!-- accounts&#45;&gt;users -->
+<g id="edge1" class="edge">
+<title>accounts:userId-&gt;users:id</title>
+<path fill="none" stroke="#5ea54a" d="M254.5,-346C296.87,-346 277.33,-277.74 309.54,-266.55"></path>
+<polygon fill="#5ea54a" stroke="#5ea54a" points="310.16,-269.99 319.5,-265 309.08,-263.08 310.16,-269.99"></polygon>
+</g>
+<!-- sessions -->
+<g id="node3" class="node">
+<title>sessions</title>
+<polygon fill="#232d95" stroke="transparent" points="32.5,-301 32.5,-319 242.5,-319 242.5,-301 32.5,-301"></polygon>
+<polygon fill="none" stroke="white" points="32.5,-301 32.5,-319 242.5,-319 242.5,-301 32.5,-301"></polygon>
+<text text-anchor="start" x="35.5" y="-308" font-family="opensans" font-weight="bold" font-size="10.00" fill="white">sessions</text>
+<polygon fill="#404040" stroke="transparent" points="32.5,-283 32.5,-301 242.5,-301 242.5,-283 32.5,-283"></polygon>
+<polygon fill="none" stroke="white" points="32.5,-283 32.5,-301 242.5,-301 242.5,-283 32.5,-283"></polygon>
+<text text-anchor="start" x="35.5" y="-290" font-family="opensans" font-size="10.00" fill="#e2c044">PK </text>
+<text text-anchor="start" x="50.78" y="-290" font-family="opensans" font-size="10.00"> | </text>
+<text text-anchor="start" x="57.78" y="-290" font-family="opensans" font-size="10.00" fill="white"> id SERIAL</text>
+<polygon fill="#404040" stroke="transparent" points="32.5,-265 32.5,-283 242.5,-283 242.5,-265 32.5,-265"></polygon>
+<polygon fill="none" stroke="white" points="32.5,-265 32.5,-283 242.5,-283 242.5,-265 32.5,-265"></polygon>
+<text text-anchor="start" x="35.5" y="-271" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;expires TIMESTAMPTZ NOT NULL</text>
+<polygon fill="#404040" stroke="transparent" points="32.5,-247 32.5,-265 242.5,-265 242.5,-247 32.5,-247"></polygon>
+<polygon fill="none" stroke="white" points="32.5,-247 32.5,-265 242.5,-265 242.5,-247 32.5,-247"></polygon>
+<text text-anchor="start" x="35.16" y="-253" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;sessionToken VARCHAR(255) NOT NULL</text>
+<polygon fill="#404040" stroke="transparent" points="32.5,-229 32.5,-247 242.5,-247 242.5,-229 32.5,-229"></polygon>
+<polygon fill="none" stroke="white" points="32.5,-229 32.5,-247 242.5,-247 242.5,-229 32.5,-229"></polygon>
+<text text-anchor="start" x="35.5" y="-236" font-family="opensans" font-size="10.00" fill="#e2c044">FK </text>
+<text text-anchor="start" x="50.78" y="-236" font-family="opensans" font-size="10.00"> | </text>
+<text text-anchor="start" x="57.78" y="-236" font-family="opensans" font-size="10.00" fill="white"> userId SERIAL NOT NULL</text>
+</g>
+<!-- sessions&#45;&gt;users -->
+<g id="edge2" class="edge">
+<title>sessions:userId-&gt;users:id</title>
+<path fill="none" stroke="#5ea54a" d="M243.5,-238C275.71,-238 282.45,-259.79 309.49,-264.22"></path>
+<polygon fill="#5ea54a" stroke="#5ea54a" points="309.26,-267.71 319.5,-265 309.8,-260.73 309.26,-267.71"></polygon>
+</g>
+<!-- user_roles -->
+<g id="node5" class="node">
+<title>user_roles</title>
+<polygon fill="#232d95" stroke="transparent" points="524.5,-184 524.5,-202 701.5,-202 701.5,-184 524.5,-184"></polygon>
+<polygon fill="none" stroke="white" points="524.5,-184 524.5,-202 701.5,-202 701.5,-184 524.5,-184"></polygon>
+<text text-anchor="start" x="527.5" y="-191" font-family="opensans" font-weight="bold" font-size="10.00" fill="white">user_roles</text>
+<polygon fill="#404040" stroke="transparent" points="524.5,-166 524.5,-184 701.5,-184 701.5,-166 524.5,-166"></polygon>
+<polygon fill="none" stroke="white" points="524.5,-166 524.5,-184 701.5,-184 701.5,-166 524.5,-166"></polygon>
+<text text-anchor="start" x="527.5" y="-173" font-family="opensans" font-size="10.00" fill="#e2c044">PK </text>
+<text text-anchor="start" x="542.78" y="-173" font-family="opensans" font-size="10.00"> | </text>
+<text text-anchor="start" x="549.78" y="-173" font-family="opensans" font-size="10.00" fill="white"> id SERIAL NOT NULL</text>
+<polygon fill="#404040" stroke="transparent" points="524.5,-148 524.5,-166 701.5,-166 701.5,-148 524.5,-148"></polygon>
+<polygon fill="none" stroke="white" points="524.5,-148 524.5,-166 701.5,-166 701.5,-148 524.5,-148"></polygon>
+<text text-anchor="start" x="527.05" y="-154" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;name VARCHAR(255) NOT NULL</text>
+</g>
+<!-- users&#45;&gt;user_roles -->
+<g id="edge3" class="edge">
+<title>users:roleId-&gt;user_roles:id</title>
+<path fill="none" stroke="#5ea54a" d="M480.5,-175C495.91,-175 502.1,-175 513.77,-175"></path>
+<polygon fill="#5ea54a" stroke="#5ea54a" points="514,-178.5 524,-175 514,-171.5 514,-178.5"></polygon>
+</g>
+<!-- Products -->
+<g id="node6" class="node">
+<title>Products</title>
+<polygon fill="#232d95" stroke="transparent" points="311.5,-130 311.5,-148 488.5,-148 488.5,-130 311.5,-130"></polygon>
+<polygon fill="none" stroke="white" points="311.5,-130 311.5,-148 488.5,-148 488.5,-130 311.5,-130"></polygon>
+<text text-anchor="start" x="314.5" y="-137" font-family="opensans" font-weight="bold" font-size="10.00" fill="white">Products</text>
+<polygon fill="#404040" stroke="transparent" points="311.5,-112 311.5,-130 488.5,-130 488.5,-112 311.5,-112"></polygon>
+<polygon fill="none" stroke="white" points="311.5,-112 311.5,-130 488.5,-130 488.5,-112 311.5,-112"></polygon>
+<text text-anchor="start" x="314.5" y="-119" font-family="opensans" font-size="10.00" fill="#e2c044">PK </text>
+<text text-anchor="start" x="329.78" y="-119" font-family="opensans" font-size="10.00"> | </text>
+<text text-anchor="start" x="336.78" y="-119" font-family="opensans" font-size="10.00" fill="white"> id SERIAL</text>
+<polygon fill="#404040" stroke="transparent" points="311.5,-94 311.5,-112 488.5,-112 488.5,-94 311.5,-94"></polygon>
+<polygon fill="none" stroke="white" points="311.5,-94 311.5,-112 488.5,-112 488.5,-94 311.5,-94"></polygon>
+<text text-anchor="start" x="314.05" y="-100" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;name VARCHAR(255) NOT NULL</text>
+<polygon fill="#404040" stroke="transparent" points="311.5,-76 311.5,-94 488.5,-94 488.5,-76 311.5,-76"></polygon>
+<polygon fill="none" stroke="white" points="311.5,-76 311.5,-94 488.5,-94 488.5,-76 311.5,-76"></polygon>
+<text text-anchor="start" x="314.5" y="-82" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;description TEXT</text>
+<polygon fill="#404040" stroke="transparent" points="311.5,-58 311.5,-76 488.5,-76 488.5,-58 311.5,-58"></polygon>
+<polygon fill="none" stroke="white" points="311.5,-58 311.5,-76 488.5,-76 488.5,-58 311.5,-58"></polygon>
+<text text-anchor="start" x="314.06" y="-64" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;price DECIMAL(10, 2) NOT NULL</text>
+<polygon fill="#404040" stroke="transparent" points="311.5,-40 311.5,-58 488.5,-58 488.5,-40 311.5,-40"></polygon>
+<polygon fill="none" stroke="white" points="311.5,-40 311.5,-58 488.5,-58 488.5,-40 311.5,-40"></polygon>
+<text text-anchor="start" x="314.5" y="-46" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;image TEXT</text>
+</g>
+<!-- Orders -->
+<g id="node7" class="node">
+<title>Orders</title>
+<polygon fill="#232d95" stroke="transparent" points="0.5,-180 0.5,-198 275.5,-198 275.5,-180 0.5,-180"></polygon>
+<polygon fill="none" stroke="white" points="0.5,-180 0.5,-198 275.5,-198 275.5,-180 0.5,-180"></polygon>
+<text text-anchor="start" x="3.5" y="-187" font-family="opensans" font-weight="bold" font-size="10.00" fill="white">Orders</text>
+<polygon fill="#404040" stroke="transparent" points="0.5,-162 0.5,-180 275.5,-180 275.5,-162 0.5,-162"></polygon>
+<polygon fill="none" stroke="white" points="0.5,-162 0.5,-180 275.5,-180 275.5,-162 0.5,-162"></polygon>
+<text text-anchor="start" x="3.5" y="-169" font-family="opensans" font-size="10.00" fill="#e2c044">PK </text>
+<text text-anchor="start" x="18.78" y="-169" font-family="opensans" font-size="10.00"> | </text>
+<text text-anchor="start" x="25.78" y="-169" font-family="opensans" font-size="10.00" fill="white"> id SERIAL</text>
+<polygon fill="#404040" stroke="transparent" points="0.5,-144 0.5,-162 275.5,-162 275.5,-144 0.5,-144"></polygon>
+<polygon fill="none" stroke="white" points="0.5,-144 0.5,-162 275.5,-162 275.5,-144 0.5,-144"></polygon>
+<text text-anchor="start" x="3.5" y="-151" font-family="opensans" font-size="10.00" fill="#e2c044">FK </text>
+<text text-anchor="start" x="18.78" y="-151" font-family="opensans" font-size="10.00"> | </text>
+<text text-anchor="start" x="25.78" y="-151" font-family="opensans" font-size="10.00" fill="white"> userId INTEGER NOT NULL</text>
+<polygon fill="#404040" stroke="transparent" points="0.5,-126 0.5,-144 275.5,-144 275.5,-126 0.5,-126"></polygon>
+<polygon fill="none" stroke="white" points="0.5,-126 0.5,-144 275.5,-144 275.5,-126 0.5,-126"></polygon>
+<text text-anchor="start" x="3.5" y="-133" font-family="opensans" font-size="10.00" fill="#e2c044">FK </text>
+<text text-anchor="start" x="18.78" y="-133" font-family="opensans" font-size="10.00"> | </text>
+<text text-anchor="start" x="25.78" y="-133" font-family="opensans" font-size="10.00" fill="white"> productId INTEGER NOT NULL</text>
+<polygon fill="#404040" stroke="transparent" points="0.5,-108 0.5,-126 275.5,-126 275.5,-108 0.5,-108"></polygon>
+<polygon fill="none" stroke="white" points="0.5,-108 0.5,-126 275.5,-126 275.5,-108 0.5,-108"></polygon>
+<text text-anchor="start" x="3.5" y="-114" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;quantity INTEGER NOT NULL</text>
+<polygon fill="#404040" stroke="transparent" points="0.5,-90 0.5,-108 275.5,-108 275.5,-90 0.5,-90"></polygon>
+<polygon fill="none" stroke="white" points="0.5,-90 0.5,-108 275.5,-108 275.5,-90 0.5,-90"></polygon>
+<text text-anchor="start" x="3.18" y="-96" font-family="opensans" font-size="10.00" fill="white"> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;createdAt TIMESTAMPTZ NOT NULL DEFAULT NOW()</text>
+</g>
+<!-- Orders&#45;&gt;users -->
+<g id="edge4" class="edge">
+<title>Orders:userId-&gt;users:id</title>
+<path fill="none" stroke="#5ea54a" d="M275,-153C324.59,-153 274.59,-248.99 309.4,-263.24"></path>
+<polygon fill="#5ea54a" stroke="#5ea54a" points="309.05,-266.73 319.5,-265 310.25,-259.84 309.05,-266.73"></polygon>
+</g>
+<!-- Orders&#45;&gt;Products -->
+<g id="edge5" class="edge">
+<title>Orders:productId-&gt;Products:id</title>
+<path fill="none" stroke="#5ea54a" d="M275,-135C288.14,-135 292.2,-126.79 301.08,-122.95"></path>
+<polygon fill="#5ea54a" stroke="#5ea54a" points="301.86,-126.36 311,-121 300.51,-119.49 301.86,-126.36"></polygon>
+</g>
+</g>
+</svg>
