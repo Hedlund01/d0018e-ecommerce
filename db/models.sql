@@ -56,15 +56,26 @@ CREATE TABLE Products(
     name VARCHAR(255) NOT NULL,
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
-    image TEXT
+    image TEXT,
+    quantity INTEGER NOT NULL
+);
+
+CREATE TABLE Order_lines(
+    id SERIAL PRIMARY KEY,
+    "productId" INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
+    "orderId" SERIAL NOT NULL,
+    FOREIGN KEY ("productId") REFERENCES Products(id),
+    FOREIGN KEY ("orderId") REFERENCES Orders(id)
 );
 
 CREATE TABLE Orders(
     id SERIAL PRIMARY KEY,
     "userId" INTEGER NOT NULL,
-    "productId" INTEGER NOT NULL,
-    quantity INTEGER NOT NULL,
     "createdAt" TIMESTAMPTZ DEFAULT NOW() NOT NULL,
-    FOREIGN KEY ("userId") REFERENCES users(id),
-    FOREIGN KEY ("productId") REFERENCES Products(id)
+    "updatedAt" TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    "status" VARCHAR(255) NOT NULL,
+    "totalPrice" DECIMAL(10, 2) NOT NULL,
+    "totalQuantity" INTEGER NOT NULL,
+    FOREIGN KEY ("userId") REFERENCES users(id)
 );
