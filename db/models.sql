@@ -21,7 +21,7 @@ CREATE TABLE accounts (
     token_type TEXT,
     "userId" SERIAL NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY ("userId") REFERENCES users(id) NOT NULL
+    FOREIGN KEY ("userId") REFERENCES users(id)
 );
 
 CREATE TABLE sessions (
@@ -30,7 +30,7 @@ CREATE TABLE sessions (
     "sessionToken" VARCHAR(255) NOT NULL,
     "userId" SERIAL NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY ("userId") REFERENCES users(id) NOT NULL
+    FOREIGN KEY ("userId") REFERENCES users(id)
 );
 
 CREATE TABLE users (
@@ -41,24 +41,22 @@ CREATE TABLE users (
     image TEXT,
     "roleId" SERIAL NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY ("roleId") REFERENCES user_roles(id) NOT NULL
+    FOREIGN KEY ("roleId") REFERENCES user_roles(id)
 );
-
 
 CREATE TABLE user_roles (
     id SERIAL NOT NULL,
     name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (id)
 );
 
 -- End Auth.js models
-
 CREATE TABLE Products(
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
-    price DECIMAL(10,2) NOT NULL,
-    image TEXT,
+    price DECIMAL(10, 2) NOT NULL,
+    image TEXT
 );
 
 CREATE TABLE Orders(
@@ -66,7 +64,7 @@ CREATE TABLE Orders(
     "userId" INTEGER NOT NULL,
     "productId" INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
-    "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    FOREIGN KEY ("userId") REFERENCES users(id) NOT NULL,
-    FOREIGN KEY ("productId") REFERENCES Products(id) NOT NULL
+    "createdAt" TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    FOREIGN KEY ("userId") REFERENCES users(id),
+    FOREIGN KEY ("productId") REFERENCES Products(id)
 );
