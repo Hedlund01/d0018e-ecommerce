@@ -1,5 +1,6 @@
 import * as React from 'react';
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
+import NextAuthProvider from '@/components/NextAuthProvider';
 
 export const metadata = {
   title: 'Create Next App',
@@ -11,7 +12,9 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <ThemeRegistry>{children}</ThemeRegistry>
+        <NextAuthProvider>
+          <ThemeRegistry>{children}</ThemeRegistry>
+        </NextAuthProvider>
       </body>
     </html>
   );
