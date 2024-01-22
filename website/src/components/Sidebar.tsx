@@ -34,6 +34,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ColorSchemeToggle from '@/components/ColorSchemeToggle';
 import { closeSidebar } from '@/utils/utils';
 import Logo from '@/components/Logo';
+import { useSession } from 'next-auth/react';
 
 function Toggler({
     defaultExpanded = false,
@@ -46,7 +47,7 @@ function Toggler({
         open: boolean;
         setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     }) => React.ReactNode;
-}) {
+    }) {
     const [open, setOpen] = React.useState(defaultExpanded);
     return (
         <React.Fragment>
@@ -68,6 +69,8 @@ function Toggler({
 }
 
 export default function Sidebar() {
+    const session = useSession();
+    console.log(session.data?.user.role)
     return (
         <Sheet
             className="Sidebar"

@@ -15,8 +15,8 @@ export default function Page() {
     if (status === 'authenticated') {
         router.replace('/')
     }
-    if(status === "loading") return <p>loading...</p>
-
+    if (status === "loading") return <p>loading...</p>
+    
 
     return (
 
