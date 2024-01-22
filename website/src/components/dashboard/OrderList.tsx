@@ -25,6 +25,18 @@ import AutorenewRoundedIcon from '@mui/icons-material/AutorenewRounded';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
+
+// Structure of the data
+//   {
+//     id: <Customer ID>,
+//     date: <Date>,
+//     status: <Refunded, Cancelled, Paid>,
+//     customer: {
+//       name: <name>,
+//       email: <email>,
+//    }
+
+
 const listItems = [
     {
         id: 'INV-1234',

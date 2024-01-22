@@ -4,7 +4,6 @@ import Button from '@mui/joy/Button';
 import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
 import { getProviders, signIn, useSession } from 'next-auth/react';
-import { getServerSession } from 'next-auth/next';
 import { useRouter } from 'next/navigation';
 
 

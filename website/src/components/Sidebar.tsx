@@ -35,6 +35,8 @@ import ColorSchemeToggle from '@/components/ColorSchemeToggle';
 import { closeSidebar } from '@/utils/utils';
 import Logo from '@/components/Logo';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 function Toggler({
     defaultExpanded = false,
@@ -47,7 +49,7 @@ function Toggler({
         open: boolean;
         setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     }) => React.ReactNode;
-    }) {
+}) {
     const [open, setOpen] = React.useState(defaultExpanded);
     return (
         <React.Fragment>
@@ -70,7 +72,8 @@ function Toggler({
 
 export default function Sidebar() {
     const session = useSession();
-    console.log(session.data?.user.role)
+    const pathname = usePathname()
+
     return (
         <Sheet
             className="Sidebar"
@@ -127,7 +130,7 @@ export default function Sidebar() {
                 <Logo />
                 <ColorSchemeToggle sx={{ ml: 'auto' }} />
             </Box>
-           
+
 
             <Input size="sm" startDecorator={<SearchRoundedIcon />} placeholder="Search" />
             <Box
@@ -150,113 +153,48 @@ export default function Sidebar() {
                         '--ListItem-radius': (theme) => theme.vars.radius.sm,
                     }}
                 >
-                    <ListItem>
-                        <ListItemButton>
-                            <HomeRoundedIcon />
-                            <ListItemContent>
-                                <Typography level="title-sm">Home</Typography>
-                            </ListItemContent>
-                        </ListItemButton>
-                    </ListItem>
+                    <Link href="/" style={{ textDecoration: 'none' }}>
+                        <ListItem>
+                            <ListItemButton>
+                                <HomeRoundedIcon />
+                                <ListItemContent>
+                                    <Typography level="title-sm">Home</Typography>
+                                </ListItemContent>
+                            </ListItemButton>
+                        </ListItem>
+                    </Link>
+                    <Link href="/dashboard" style={{ textDecoration: 'none' }}>
+                        <ListItem>
+                            <ListItemButton selected={pathname === "/dashboard"}>
+                                <DashboardRoundedIcon />
+                                <ListItemContent>
+                                    <Typography level="title-sm">Dashboard</Typography>
+                                </ListItemContent>
+                            </ListItemButton>
+                        </ListItem>
+                    </Link>
+                    <Link href="/dashboard/orders" style={{ textDecoration: 'none' }}>
+                        <ListItem>
+                            <ListItemButton selected={pathname === "/dashboard/orders"}>
+                                <ShoppingCartRoundedIcon />
+                                <ListItemContent>
+                                    <Typography level="title-sm">Orders</Typography>
+                                </ListItemContent>
+                            </ListItemButton>
+                        </ListItem>
+                    </Link>
 
-                    <ListItem>
-                        <ListItemButton>
-                            <DashboardRoundedIcon />
-                            <ListItemContent>
-                                <Typography level="title-sm">Dashboard</Typography>
-                            </ListItemContent>
-                        </ListItemButton>
-                    </ListItem>
 
-                    <ListItem>
-                        <ListItemButton selected>
-                            <ShoppingCartRoundedIcon />
-                            <ListItemContent>
-                                <Typography level="title-sm">Orders</Typography>
-                            </ListItemContent>
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem nested>
-                        <Toggler
-                            renderToggle={({ open, setOpen }) => (
-                                <ListItemButton onClick={() => setOpen(!open)}>
-                                    <AssignmentRoundedIcon />
-                                    <ListItemContent>
-                                        <Typography level="title-sm">Tasks</Typography>
-                                    </ListItemContent>
-                                    <KeyboardArrowDownIcon
-                                        sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
-                                    />
-                                </ListItemButton>
-                            )}
-                        >
-                            <List sx={{ gap: 0.5 }}>
-                                <ListItem sx={{ mt: 0.5 }}>
-                                    <ListItemButton>All tasks</ListItemButton>
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemButton>Backlog</ListItemButton>
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemButton>In progress</ListItemButton>
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemButton>Done</ListItemButton>
-                                </ListItem>
-                            </List>
-                        </Toggler>
-                    </ListItem>
-
-                    <ListItem>
-                        <ListItemButton
-                            role="menuitem"
-                            component="a"
-                            href="/joy-ui/getting-started/templates/messages/"
-                        >
-                            <QuestionAnswerRoundedIcon />
-                            <ListItemContent>
-                                <Typography level="title-sm">Messages</Typography>
-                            </ListItemContent>
-                            <Chip size="sm" color="primary" variant="solid">
-                                4
-                            </Chip>
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem nested>
-                        <Toggler
-                            renderToggle={({ open, setOpen }) => (
-                                <ListItemButton onClick={() => setOpen(!open)}>
-                                    <GroupRoundedIcon />
-                                    <ListItemContent>
-                                        <Typography level="title-sm">Users</Typography>
-                                    </ListItemContent>
-                                    <KeyboardArrowDownIcon
-                                        sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
-                                    />
-                                </ListItemButton>
-                            )}
-                        >
-                            <List sx={{ gap: 0.5 }}>
-                                <ListItem sx={{ mt: 0.5 }}>
-                                    <ListItemButton
-                                        role="menuitem"
-                                        component="a"
-                                        href="/joy-ui/getting-started/templates/profile-dashboard/"
-                                    >
-                                        My profile
-                                    </ListItemButton>
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemButton>Create a new user</ListItemButton>
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemButton>Roles & permission</ListItemButton>
-                                </ListItem>
-                            </List>
-                        </Toggler>
-                    </ListItem>
+                    <Link href="/dashboard/users" style={{ textDecoration: 'none' }}>
+                        <ListItem>
+                            <ListItemButton selected={pathname === "/dashboard/users"}>
+                                <GroupRoundedIcon />
+                                <ListItemContent>
+                                    <Typography level="title-sm">Users</Typography>
+                                </ListItemContent>
+                            </ListItemButton>
+                        </ListItem>
+                    </Link>
                 </List>
 
                 <List
@@ -282,22 +220,32 @@ export default function Sidebar() {
                         </ListItemButton>
                     </ListItem>
                 </List>
-            </Box>
+            </Box >
             <Divider />
-            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                <Avatar
-                    variant="outlined"
-                    size="sm"
-                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-                />
-                <Box sx={{ minWidth: 0, flex: 1 }}>
-                    <Typography level="title-sm">Siriwat K.</Typography>
-                    <Typography level="body-xs">siriwatk@test.com</Typography>
+            {session.status === "loading" &&
+                (
+                    <Typography>Loading... </Typography>
+                )
+            }
+            {session.status === "authenticated" &&
+                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                    <Avatar
+                        variant="outlined"
+                        size="sm"
+                        src={session.data.user.image || ""}
+                    />
+                    <Box sx={{ minWidth: 0, flex: 1 }}>
+                        <Typography level="title-sm">{session.data.user.name}</Typography>
+                        <Typography level="body-xs">{session.data.user.email}</Typography>
+                    </Box>
+                    <Link href="/api/auth/signout" style={{ textDecoration: 'none' }}>
+                        <IconButton size="sm" variant="plain" color="neutral">
+                            <LogoutRoundedIcon />
+                        </IconButton>
+                    </Link>
                 </Box>
-                <IconButton size="sm" variant="plain" color="neutral">
-                    <LogoutRoundedIcon />
-                </IconButton>
-            </Box>
-        </Sheet>
+            }
+
+        </Sheet >
     );
 }

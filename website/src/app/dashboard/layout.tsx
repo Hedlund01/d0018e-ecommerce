@@ -1,18 +1,28 @@
-import { CssVarsProvider, CssBaseline, Box } from "@mui/joy";
+import { CssVarsProvider, CssBaseline, Box, Link, Typography } from "@mui/joy";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
+import { redirect } from "next/navigation";
 
-export default function Layout({
+import { auth } from "@/utils/auth";
+import Breadcrumbs from "@/components/DashboardBreadcrumbs";
+
+export default async function Layout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+
+    const session = await auth();
+    // if (session?.user.role !== "admin") {
+    //     redirect("/")
+    // }
     return (
         <CssVarsProvider disableTransitionOnChange>
             <CssBaseline />
             <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
                 <Header />
                 <Sidebar />
+                
                 <Box
                     component="main"
                     className="MainContent"
@@ -32,6 +42,7 @@ export default function Layout({
                         gap: 1,
                     }}
                 >
+                    <Breadcrumbs />
                     {children}
                 </Box>
             </Box>
