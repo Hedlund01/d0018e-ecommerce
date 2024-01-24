@@ -1,4 +1,4 @@
-import { extendTheme } from '@mui/joy/styles';
+import { extendTheme } from '@mui/joy';
 import { Inter, Source_Code_Pro } from 'next/font/google';
 
 const inter = Inter({

@@ -1,3 +1,4 @@
+"use client"
 import * as React from 'react';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
@@ -10,13 +11,12 @@ import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 
 import OrderTable from '@/components/dashboard/OrderTable';
 import OrderList from '@/components/dashboard/OrderList';
+import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
 
 
 export default function Dashboard() {
 
-    async function getOrders() {
-        
-    }
+
     return (
         <>
 
