@@ -67,65 +67,7 @@ export default function Page() {
                     minHeight: 0,
                 }}>
                 <DataGrid rows={rows} columns={columns} slots={{ toolbar: GridToolbar }} />
-                {/* <Table
-                    stickyHeader
-                    hoverRow
-                    sx={{
-                        '--TableCell-headBackground': 'var(--joy-palette-background-level1)',
-                        '--Table-headerUnderlineThickness': '1px',
-                        '--TableRow-hoverBackground': 'var(--joy-palette-background-level1)',
-                        '--TableCell-paddingY': '4px',
-                        '--TableCell-paddingX': '8px',
-                        "overflowX": "scroll",
-                        "minWidth": "100%"
-                    }}
-                    
-                >
-                    <thead>
-                        <tr>
-                            {users?.fields.filter((field) => field.name !== "emailVerified").map((field) => (
-                                <th key={field.name} >{unCamelCase(field.name)}</th>
-                            ))}
-                            <th >Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        {
-                            users?.rows.map((row) => (
-                                <tr key={row.id} >
-                                    {users.fields.filter((field) => field.name !== "emailVerified").map((field) => {
-                                        if (field.name === "image") {
-                                            return <td key={field.name} ><Image src={row[field.name]} alt="profile picture" width={40} height={40} /></td>
-                                        } else {
-                                            return <td key={field.name} >{row[field.name]}</td>
-                                        }
-                                    }
-                                    )}
-                                    <td >
-                                        <Dropdown>
-                                            <MenuButton
-                                                slots={{ root: IconButton }}
-                                                slotProps={{ root: { variant: 'outlined', color: 'neutral' } }}
-                                            >
-                                                <MoreHorizIcon />
-                                            </MenuButton>
-                                            <Menu>
-                                                <MenuItem>Edit</MenuItem>
-                                                <MenuItem variant="soft" color="danger">
-                                                    <ListItemDecorator sx={{ color: 'inherit' }}>
-                                                        <DeleteForever />
-                                                    </ListItemDecorator>{' '}
-                                                    Delete
-                                                </MenuItem>
-                                            </Menu>
-                                        </Dropdown>
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </Table> */}
+              
             </Sheet>
         </>
 
