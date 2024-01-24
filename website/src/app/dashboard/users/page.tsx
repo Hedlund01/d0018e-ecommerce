@@ -21,7 +21,7 @@ export default function Page() {
     }, [])
 
     //Remove the filed named emailVerified
-    const rows: GridRowsProp = users?.rows.map((row) => { 
+    const rows: GridRowsProp = users?.rows.map((row) => {
         const newRow: any = {}
         for (const [key, value] of Object.entries(row)) {
             if (key !== "emailVerified") {
@@ -41,7 +41,7 @@ export default function Page() {
                     <Image src={params.value} alt="profile picture" width={40} height={40} />
                 )
             }
-        }else {
+        } else {
             return {
                 field: field.name,
                 headerName: unCamelCase(field.name),
@@ -66,10 +66,7 @@ export default function Page() {
                     overflow: 'auto',
                     minHeight: 0,
                 }}>
-                <DataGrid rows={rows} columns={columns} slots={{ toolbar: GridToolbar }} sx={(theme) => ({
-                    color: theme.palette.text.primary,
-                    
-                    })} />
+                <DataGrid rows={rows} columns={columns} slots={{ toolbar: GridToolbar }} />
                 {/* <Table
                     stickyHeader
                     hoverRow
