@@ -84,7 +84,9 @@ export default function Page() {
                     overflow: 'auto',
                     minHeight: 0,
                 }}>
+
                 <DataGrid rows={rows} columns={columns} slots={{ toolbar: GridToolbar }}/>
+
             </Sheet>
         </>
 
