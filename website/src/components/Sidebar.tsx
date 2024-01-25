@@ -30,6 +30,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 import ColorSchemeToggle from '@/components/ColorSchemeToggle';
 import { closeSidebar } from '@/utils/utils';
@@ -191,6 +192,18 @@ export default function Sidebar() {
                                 <GroupRoundedIcon />
                                 <ListItemContent>
                                     <Typography level="title-sm">Users</Typography>
+                                </ListItemContent>
+                            </ListItemButton>
+                        </ListItem>
+                    </Link>
+
+
+                    <Link href="/dashboard/products" style={{ textDecoration: 'none' }}>
+                        <ListItem>
+                            <ListItemButton selected={pathname === "/dashboard/products"}>
+                                <InventoryIcon />
+                                <ListItemContent>
+                                    <Typography level="title-sm">Products</Typography>
                                 </ListItemContent>
                             </ListItemButton>
                         </ListItem>
