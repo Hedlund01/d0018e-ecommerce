@@ -30,13 +30,14 @@ export default function Form({ user, action }: { user?: User, action: (data: For
                 <FormLabel>Email Verified</FormLabel>
                 <Input name="emailVerified" value={user?.emailVerified?.toDateString()} disabled />
                 <FormLabel>Image</FormLabel>
-                <Input name="image" value={user?.image} disabled />
+                <Input name="image" value={user?.image || ""} disabled />
                 <FormLabel>Role</FormLabel>
                 <Select placeholder="Choose a role" value={role} onChange={(_, value) => setRole(value || "user")}>
                     {
-                        userRoleEnum.unwrap().options.map((option) => (
-                            <Option key={option} value={option.toString()}>{unCamelCase(option)}</Option>
+                        Object.keys(userRoleEnum.Values).map((key) => (
+                            <Option key={key} value={key}>{unCamelCase(key)}</Option>
                         ))
+                     
                     }
                 </Select>
                 <Button type="submit">Submit</Button>

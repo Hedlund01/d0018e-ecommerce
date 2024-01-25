@@ -14,14 +14,14 @@ export default function Page() {
     const [users, setUsers] = React.useState<QueryResult<QueryResultRow> | null>(null)
     const router = useRouter();
     React.useEffect(() => {
-        const test = async () => {
+        const localAsync = async () => {
             const users = await getUsers()
             setUsers(users)
         }
-        test()
+        localAsync()
     }, [])
 
-    //Remove the filed named emailVerified
+    //Remove the field named emailVerified
     const rows: GridRowsProp = users?.rows.map((row) => {
         const newRow: any = {}
         for (const [key, value] of Object.entries(row)) {
@@ -41,6 +41,16 @@ export default function Page() {
                     <Image src={params.value} alt="profile picture" width={40} height={40} />
                 )
             }
+        } else if (field.name === "role") { 
+            return {
+                field: field.name,
+                headerName: unCamelCase(field.name),
+                width: 150,
+                renderCell: (params) => (
+                    unCamelCase(params.value)
+                )
+            }
+        
         } else {
             return {
                 field: field.name,
