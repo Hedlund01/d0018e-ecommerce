@@ -10,14 +10,6 @@ const pool = new Pool({
     connectionString: process.env.POSTGRES_URL + "?sslmode=require",
 })
 
-
-// // Update the adapter to use the CustomAdapterUser type
-// export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
-//     adapter: PostgresAdapter(pool),
-//     session: { strategy: "jwt" },
-//     ...authConfig,
-// })
-
 export const config = {
 
     adapter: PostgresAdapter(pool) as Adapter,

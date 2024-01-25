@@ -1,6 +1,8 @@
 import * as React from 'react';
-import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
-import NextAuthProvider from '@/components/NextAuthProvider';
+import ThemeRegistry from '@/providers/ThemeRegistry/ThemeRegistry';
+import NextAuthProvider from '@/providers/NextAuthProvider';
+import { SnackBarProvider } from '@/providers/alertProvider';
+
 
 export const metadata = {
   title: 'Create Next App',
@@ -13,9 +15,13 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body>
         <NextAuthProvider>
-          <ThemeRegistry>{children}</ThemeRegistry>
+          <ThemeRegistry>
+            <SnackBarProvider>
+              {children}
+            </SnackBarProvider>
+          </ThemeRegistry>
         </NextAuthProvider>
       </body>
-    </html>
+    </html >
   );
 }
