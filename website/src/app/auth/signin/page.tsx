@@ -5,6 +5,7 @@ import Typography from '@mui/joy/Typography';
 import Stack from '@mui/joy/Stack';
 import { getProviders, signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { CircularProgress } from '@mui/joy';
 
 
 
@@ -14,7 +15,7 @@ export default function Page() {
     if (status === 'authenticated') {
         router.replace('/')
     }
-    if (status === "loading") return <p>loading...</p>
+    if (status === "loading") return <CircularProgress />
     
 
     return (
