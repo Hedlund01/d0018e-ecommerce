@@ -11,7 +11,6 @@ const pool = new Pool({
 })
 
 export const config = {
-
     adapter: PostgresAdapter(pool) as Adapter,
 
     ...authConfig

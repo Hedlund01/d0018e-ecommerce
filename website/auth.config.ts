@@ -1,5 +1,6 @@
 import type { NextAuthConfig } from "next-auth"
 import GitHub from "next-auth/providers/github"
+import Authentik from "@auth/core/providers/authentik"
 import NextAuth, { type Session, type User } from "next-auth";
 
 declare module "next-auth" {
@@ -8,7 +9,7 @@ declare module "next-auth" {
      */
     interface Session {
         user: {
-            /** The user's postal address. */
+            /** The user's role. */ 
             role: string
         } & User
     }
@@ -19,9 +20,11 @@ declare module "next-auth" {
 }
 
 export default {
-    debug: false,
+    debug: true,
+    useSecureCookies: process.env.NODE_ENV === "production",
     providers: [
         GitHub,
+        Authentik({ clientId: process.env.AUTHENTIK_ID, clientSecret: process.env.AUTHENTIK_SECRET, issuer: process.env.AUTHENTIK_ISSUER})
     ].filter(Boolean) as NextAuthConfig["providers"],
     session: { strategy: "database" },
     callbacks: {
