@@ -33,16 +33,6 @@ export default async function Home() {
   }
 
   return (
-    <Sheet
-      sx={{
-        display: 'flex',
-        flexFlow: 'row nowrap',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-      }}
-    >
       <p>hej</p>
-    </Sheet>
   );
 }
