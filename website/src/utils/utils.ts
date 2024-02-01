@@ -26,6 +26,7 @@ export function toggleSidebar() {
 }
 
 export function unCamelCase(str: string) {
+    if(str === null) return ""
     return str
         .replace(/([A-Z])/g, ' $1')
         .replace(/^./, (str) => str.toUpperCase())

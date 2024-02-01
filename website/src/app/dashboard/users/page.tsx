@@ -38,7 +38,7 @@ export default function Page() {
                 headerName: unCamelCase(field.name),
                 width: 150,
                 renderCell: (params) => (
-                    <Image src={params.value} alt="profile picture" width={40} height={40} />
+                    <Image src={params.value || ""} alt="profile picture" width={40} height={40} />
                 )
             }
         } else if (field.name === "role") { 
