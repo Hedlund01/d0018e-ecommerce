@@ -4,12 +4,13 @@ import Apps from '@mui/icons-material/Apps';
 import FactCheck from '@mui/icons-material/FactCheck';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import Person from '@mui/icons-material/Person';
-import { Avatar, Box, Dropdown, ListDivider, Menu, MenuButton, MenuItem, Stack, Typography, useTheme } from '@mui/joy';
+import { Avatar, Box, Button, Dropdown, ListDivider, Menu, MenuButton, MenuItem, Stack, Typography, useTheme } from '@mui/joy';
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
 import ListItemButton from '@mui/joy/ListItemButton';
 import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import { useMediaQuery } from '@mui/material';
+import Link from 'next/link';
 import * as React from 'react';
 import { useState } from 'react';
 
@@ -111,7 +112,7 @@ export default function Navigation() {
                     size="lg"
                     endDecorator={<KeyboardArrowDown />}
                 >
-                   Test
+                   Products
                 </MenuButton>
                 <Menu
                     sx={{
@@ -123,7 +124,7 @@ export default function Navigation() {
                 >
 
                     <MenuItem>
-                        Help
+                        Categories
                     </MenuItem>
                     <MenuItem>
                         Settings
@@ -144,46 +145,11 @@ export default function Navigation() {
                     </MenuItem>
                 </Menu>
             </Dropdown>
-            <Dropdown>
-                <MenuButton
-                    variant="soft"
-                    size="lg"
-                >
-                    Test
-                </MenuButton>
-                <Menu
-                    placement="bottom"
-                    size="sm"
-                    sx={{
-                        zIndex: '99999',
-                        p: 1,
-                        gap: 1,
-                        '--ListItem-radius': 'var(--joy-radius-sm)',
-                    }}
-                >
-
-                    <MenuItem>
-                        Help
-                    </MenuItem>
-                    <MenuItem>
-                        Settings
-                    </MenuItem>
-                    <ListDivider />
-                    <MenuItem component="a" href="/blog/first-look-at-joy/">
-                        First look at Joy UI
-                    </MenuItem>
-                    <MenuItem
-                        component="a"
-                        href="https://github.com/mui/material-ui/tree/master/docs/data/joy/getting-started/templates/email"
-                    >
-                        Sourcecode
-                    </MenuItem>
-                    <ListDivider />
-                    <MenuItem>
-                        Log out
-                    </MenuItem>
-                </Menu>
-            </Dropdown>
+            <Link href="/products">
+                <Button size="lg" variant='outlined' color='neutral'>
+                    Products
+                </Button>
+            </Link>
         </Stack>
     );
 }

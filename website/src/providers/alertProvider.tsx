@@ -20,7 +20,7 @@ const SnackBarProvider: React.FC<SnackBarContextProviderProps> = ({
     const [message, setMessage] = React.useState<string>('');
     const [typeColor, setTypeColor] = React.useState<"primary" | "neutral" | "danger" | "success" | "warning">('primary');
 
-    const showSnackBar = (text: string, severity: "primary" | "neutral" | "danger" | "success" | "warning") => {
+    const showSnackBar = (text: string, severity: "primary" | "neutral"  | "danger" | "success" | "warning") => {
         setMessage(text);
         setTypeColor(severity);
         setOpen(true);

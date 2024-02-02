@@ -3,13 +3,18 @@
 import { CreateUpdateProduct, createUpdateProductSchema } from "@/types/products"
 import { Product, productSchema } from "@/types/products"
 import { sql } from "@vercel/postgres"
+import { cache } from "react"
 
 export async function getProducts(): Promise<Product[]>{
+    console.log("getProducts")
     const result = await sql`SELECT * FROM products`;
+    console.log(result)
     const products = await Promise.all(result.rows.map(async (product: any) => {
         product.price = parseFloat(product.price)
         const parsedProduct = await productSchema.safeParseAsync(product);
+        console.log(parsedProduct)
         if (!parsedProduct.success) {
+            console.log("Error parsing product: ", parsedProduct.error.message)
             return null
         } else {
             
@@ -19,6 +24,27 @@ export async function getProducts(): Promise<Product[]>{
     )
     return  products.flatMap((product) => product ? [product] : []) as Product[]
 }
+
+
+export const getProductsCached = cache(async () => {
+    console.log("getProducts")
+    const result = await sql`SELECT * FROM products`;
+    console.log(result)
+    const products = await Promise.all(result.rows.map(async (product: any) => {
+        product.price = parseFloat(product.price)
+        const parsedProduct = await productSchema.safeParseAsync(product);
+        console.log(parsedProduct)
+        if (!parsedProduct.success) {
+            console.log("Error parsing product: ", parsedProduct.error.message)
+            return null
+        } else {
+
+            return parsedProduct.data
+        }
+    })
+    )
+    return products.flatMap((product) => product ? [product] : []) as Product[]
+})
 
 export async function getProduct(id: string): Promise<Product | undefined> {
     try {
