@@ -1,4 +1,5 @@
 "use client"
+import { useCart } from "@/providers/CartProvider"
 import { Product } from "@/types/products"
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import { AspectRatio, Button, Card, CardContent, CardOverflow, Chip, Grid, Typography } from "@mui/joy"
@@ -8,8 +9,9 @@ import { numericFormatter } from "react-number-format"
 export default function ProductCard({ product }: {
     product: Product
 }) {
+    const cart = useCart();
     return (
-        <Card sx={{ boxShadow: 'lg' }}>
+        <Card sx={{ boxShadow: 'lg' }} >
             <CardOverflow>
                 <Link href={`/products/${product.id}`} style={{ margin: 0, padding: 0, textDecoration: 'none' }} prefetch>
                     <CardOverflow >
@@ -63,6 +65,7 @@ export default function ProductCard({ product }: {
                     variant="solid"
                     size="lg"
                     endDecorator={<AddShoppingCartIcon />}
+                    onClick={() => cart.addToCart(product)}
                 >
                     Add to cart
                 </Button>

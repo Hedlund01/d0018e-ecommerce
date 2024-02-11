@@ -12,9 +12,11 @@ import Logo from '@/components/Logo';
 import Navigation from './Navigation';
 import { UserButton } from './UserButton';
 import { Button, IconButton } from '@mui/joy';
+import { useCart } from '@/providers/CartProvider';
 
 
 export default function Header({ drawerOpen, setDrawerOpen }: { drawerOpen: boolean, setDrawerOpen: Function }) {
+    const cart = useCart();
     return (
         <Box
             sx={{
@@ -68,7 +70,9 @@ export default function Header({ drawerOpen, setDrawerOpen }: { drawerOpen: bool
                   <UserButton />
                 </Box>
                 <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-                    <IconButton>
+                    <IconButton
+                    onClick={() => cart.showCart()}
+                    >
                         <ShoppingCartIcon />
                     </IconButton>
                 </Box>

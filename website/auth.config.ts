@@ -10,7 +10,8 @@ declare module "next-auth" {
     interface Session {
         user: {
             /** The user's role. */
-            role: string
+            role: string,
+            id: string | undefined
         } & User
     }
 
@@ -30,6 +31,7 @@ export default {
     callbacks: {
         async session({ session, user }: { session: Session; user?: User }) {
             session.user.role = user?.role ?? "user";
+            session.user.id = user?.id 
             return session;
         }
     }
