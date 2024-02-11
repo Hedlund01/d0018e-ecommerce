@@ -7,10 +7,10 @@ CREATE TABLE verification_token (
 
 CREATE TABLE accounts (
     id SERIAL,
-    "userId" INTEGER NOT NULL,
+    userId INTEGER NOT NULL,
     type VARCHAR(255) NOT NULL,
     provider VARCHAR(255) NOT NULL,
-    "providerAccountId" VARCHAR(255) NOT NULL,
+    providerAccountId VARCHAR(255) NOT NULL,
     refresh_token TEXT,
     access_token TEXT,
     expires_at BIGINT,
@@ -23,9 +23,9 @@ CREATE TABLE accounts (
 
 CREATE TABLE sessions (
     id SERIAL,
-    "userId" INTEGER NOT NULL,
+    userId INTEGER NOT NULL,
     expires TIMESTAMPTZ NOT NULL,
-    "sessionToken" VARCHAR(255) NOT NULL,
+    sessionToken VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -33,7 +33,7 @@ CREATE TABLE users (
     id SERIAL,
     name VARCHAR(255),
     email VARCHAR(255),
-    "emailVerified" TIMESTAMPTZ,
+    emailVerified TIMESTAMPTZ,
     image TEXT,
     role VARCHAR(255),
     PRIMARY KEY (id)
@@ -48,16 +48,17 @@ CREATE TABLE Products(
     quantity INTEGER NOT NULL
 );
 
-CREATE TABLE Order_lines(
+CREATE TABLE Orders(
     id SERIAL PRIMARY KEY,
     productId INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
     orderId SERIAL NOT NULL,
     FOREIGN KEY (productId) REFERENCES Products(id) ON DELETE NO ACTION,
     FOREIGN KEY (orderId) REFERENCES Orders(id) ON DELETE CASCADE
+
 );
 
-CREATE TABLE Orders(
+CREATE TABLE Order_lines(
     id SERIAL PRIMARY KEY,
     userId INTEGER NOT NULL,
     createdAt TIMESTAMPTZ DEFAULT NOW() NOT NULL,
@@ -76,3 +77,4 @@ CREATE TABLE Cart_lines(
     CONSTRAINT fk_user FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE,
     PRIMARY KEY(productId, userId)
 );
+
