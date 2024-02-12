@@ -19,7 +19,7 @@ export async function setCartDB(cartLines: CartLine[]) {
     try {
         for (const line of cartLines) {
             await sql`	
-	                    INSERT INTO cart_lines (userId, productId, quantity) VALUES(1, 1, 1) 
+	                    INSERT INTO cart_lines (userId, productId, quantity) VALUES(${authResult.user.id}, ${line.product.id}, ${line.quantity}) 
 	                    ON CONFLICT (userId, productId) DO UPDATE
 	                    SET quantity=cart_lines.quantity+1;
 
@@ -30,10 +30,15 @@ export async function setCartDB(cartLines: CartLine[]) {
     }
 }
 
-export async function setQuantityDB(userId: number, productId: number, quantity: number) {
+export async function setQuantityDB(productId: number, quantity: number) {
+     const authResult = await auth();
+    if (!authResult) {
+        console.log("Authentication failed");
+        return;
+    }
     try {
         await sql`
-            UPDATE cart_lines SET quantity = ${quantity} WHERE userId = ${userId} AND productId = ${productId}
+            UPDATE cart_lines SET quantity = ${quantity} WHERE userId = ${authResult.user.id} AND productId = ${productId}
         `;
     } catch (error) {
         console.log("Error setting quantity in database", error);
@@ -76,9 +81,14 @@ export async function getCartDB(): Promise<CartLine[]> {
 }
 
 
-export async function removeCartDB(userId: number, productId: number) {
+export async function removeCartDB(productId: number) {
+      const authResult = await auth();
+    if (!authResult) {
+        console.log("Authentication failed");
+        return;
+    }
     try {
-        await sql`DELETE FROM cart_lines WHERE userId = ${userId} AND productId = ${productId}`;
+        await sql`DELETE FROM cart_lines WHERE userId = ${authResult.user.id} AND productId = ${productId}`;
     } catch (error) {
         console.log("Error removing cart from database");
     }
