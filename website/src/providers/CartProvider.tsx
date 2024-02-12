@@ -87,7 +87,7 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
     const removeFromCart = (cartLine: CartLine) => {
         setProducts(products.filter((item) => item.product.id !== cartLine.product.id));
         if (status === 'authenticated') {
-            removeCartDB(cartLine.userId, cartLine.product.id);
+            removeCartDB(cartLine.product.id);
         } else {
             setCartCookie(products)
 
