@@ -77,7 +77,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            gridColumn: '1 / -1',
                             borderBottom: '1px solid',
                             borderColor: 'divider',
                             position: 'sticky',
