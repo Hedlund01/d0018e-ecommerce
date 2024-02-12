@@ -104,7 +104,7 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
             else {
                 setProducts([...products]);
                 if (status === 'authenticated') {
-                    setQuantityDB(cartLine.userId, cartLine.product.id, existingProduct.quantity);
+                    setQuantityDB(cartLine.product.id, existingProduct.quantity);
                 } else {
                     setCartCookie(products);
                 }
