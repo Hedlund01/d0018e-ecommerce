@@ -50,26 +50,31 @@ CREATE TABLE Products(
 
 CREATE TABLE Orders(
     id SERIAL PRIMARY KEY,
+    productId INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
+    orderId SERIAL NOT NULL,
+    FOREIGN KEY (productId) REFERENCES Products(id) ON DELETE NO ACTION,
+    FOREIGN KEY (orderId) REFERENCES Orders(id) ON DELETE CASCADE
+
+);
+
+CREATE TABLE Order_lines(
+    id SERIAL PRIMARY KEY,
     userId INTEGER NOT NULL,
     createdAt TIMESTAMPTZ DEFAULT NOW() NOT NULL,
     updatedAt TIMESTAMPTZ DEFAULT NOW() NOT NULL,
     status VARCHAR(255) NOT NULL,
     totalPrice DECIMAL(10, 2) NOT NULL,
     totalQuantity INTEGER NOT NULL,
-    CONSTRAINT fk_user
-          FOREIGN KEY(userId)
-          REFERENCES users(id)
+    FOREIGN KEY (userId) REFERENCES users(id) ON DELETE NO ACTION
 );
 
-CREATE TABLE Order_lines(
-    id SERIAL PRIMARY KEY,
+CREATE TABLE Cart_lines(
     productId INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
-    orderId SERIAL NOT NULL,
-    CONSTRAINT fk_product
-          FOREIGN KEY(productId)
-          REFERENCES Products(id),
-    CONSTRAINT fk_order
-          FOREIGN KEY(orderId)
-          REFERENCES Orders(id)
+    userId SERIAL NOT NULL,
+    CONSTRAINT fk_product FOREIGN KEY(productId) REFERENCES Products(id) ON DELETE CASCADE,
+    CONSTRAINT fk_user FOREIGN KEY(userId) REFERENCES users(id) ON DELETE CASCADE,
+    PRIMARY KEY(productId, userId)
 );
+

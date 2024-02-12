@@ -1,7 +1,8 @@
-import * as React from 'react';
-import ThemeRegistry from '@/providers/ThemeRegistry/ThemeRegistry';
+import { CartProvider } from '@/providers/CartProvider';
 import NextAuthProvider from '@/providers/NextAuthProvider';
+import ThemeRegistry from '@/providers/ThemeRegistry/ThemeRegistry';
 import { SnackBarProvider } from '@/providers/alertProvider';
+import * as React from 'react';
 
 
 export const metadata = {
@@ -16,9 +17,11 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       <body>
         <NextAuthProvider>
           <ThemeRegistry>
-            <SnackBarProvider>
-              {children}
-            </SnackBarProvider>
+            <CartProvider>
+              <SnackBarProvider>
+                {children}
+              </SnackBarProvider>
+            </CartProvider>
           </ThemeRegistry>
         </NextAuthProvider>
       </body>

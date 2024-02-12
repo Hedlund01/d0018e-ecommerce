@@ -9,15 +9,18 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Box, IconButton, Sheet, useTheme } from '@mui/joy';
 import Header from './components/Header';
 import { UserButton } from './components/UserButton';
+import { useCart } from '@/providers/CartProvider';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const theme = useTheme();
+    const cart = useCart();
     const breakpoint = theme.breakpoints.down('sm');
     const headerHeight = "8vh";
     const footerHeight = "8vh";
     return (
         <>
+            
             <Stack
                 id="tab-bar"
                 direction="row"
@@ -47,6 +50,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     color="neutral"
                     startDecorator={<ShoppingCartIcon />}
                     sx={{ flexDirection: 'column', '--Button-gap': 0 }}
+                    onClick={() => cart.showCart()}
                 >
                     Cart
                 </Button>
