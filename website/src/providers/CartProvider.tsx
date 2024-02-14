@@ -235,7 +235,7 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
                         >
                             Clear
                         </Button>
-                        <Link href="/checkout">
+                        <Link href="/checkout" onClick={() => setOpen(false)}>
                             <Button>
                                 Checkout
                             </Button>

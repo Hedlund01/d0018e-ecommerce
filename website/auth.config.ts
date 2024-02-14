@@ -21,7 +21,7 @@ declare module "next-auth" {
 }
 
 export default {
-    debug: false,
+    debug: true,
     useSecureCookies: process.env.NODE_ENV === "production",
     providers: [
         GitHub,
@@ -31,7 +31,7 @@ export default {
     callbacks: {
         async session({ session, user }: { session: Session; user?: User }) {
             session.user.role = user?.role ?? "user";
-            session.user.id = user?.id 
+            session.user.id = user?.id
             return session;
         }
     }
