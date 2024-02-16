@@ -1,16 +1,24 @@
 import { checkout } from "@/actions/checkout";
+import { useSnackBar } from "@/providers/alertProvider";
 import { auth } from "@/utils/auth";
-import { Button, FormControl, FormLabel, Input, Sheet, Stack, Typography } from "@mui/joy";
+import { Button, Card, FormControl, FormLabel, Input, Sheet, Stack, Typography } from "@mui/joy";
 import { redirect } from "next/navigation";
+import { useState } from "react";
 
 export default async function CheckoutForm() {
+    let error = ""
     const session = await auth()
     if (!session) {
         redirect("auth/signin")
     }
     async function handleSubmit() {
         "use server"
-        await checkout();
+        const res = await checkout();
+        if (res.success) {
+            redirect(`/orders/${res.id}`)
+        } else {
+            error = res.message
+        }
         
     }
     return (
@@ -25,7 +33,14 @@ export default async function CheckoutForm() {
                     borderRadius: 'sm',
                     padding: '2rem',
             }}>
-          
+                
+                {
+                    error && (
+                        <Card variant="soft" color="danger" sx={{ mb: 3 }}>
+                            {error}
+                        </Card>
+                    )
+                }
             
             <form action={handleSubmit}>
                 <Stack spacing={3}>

@@ -3,19 +3,33 @@
 import { auth } from "@/utils/auth";
 import { createClient } from "@vercel/postgres";
 
-export async function checkout(userId: string = "") {
+
+
+export async function checkout(userId: string = ""): Promise<{
+    success: boolean
+    message: string
+    id?: number
+}> {
     const authResult = await auth();
     if (!authResult) {
         console.log("Authentication failed");
-        return;
+        return {
+            success: false,
+            message: "Authentication failed"
+        
+        };
     }
     if (userId !== "" && authResult.user.role !== "admin") { 
         console.log(`${authResult.user.email} is not an admin and cannot checkout for other users!`);
-        return;
+        return {
+            success: false,
+            message: `${authResult.user.email} is not an admin and cannot checkout for other users!`
+        
+        };
     }
     if (userId === "") userId = authResult.user.id as string;
 
-
+    let orderId = null;
     const client = createClient()
     client.connect()
     try {
@@ -30,7 +44,8 @@ export async function checkout(userId: string = "") {
         // create order
         const orderRes = await client.query(`INSERT INTO Orders (userId, status, totalPrice, totalQuantity)  VALUES(${userId}, 'creating_order', 0, 0) RETURNING id`);
 
-        const orderId = orderRes.rows[0].id;
+        orderId = orderRes.rows[0].id;
+
 
         let totalPrice = 0;
         let totalQuantity = 0;
@@ -69,11 +84,21 @@ export async function checkout(userId: string = "") {
         //end transaction
         await client.query(`COMMIT`)
     }
-    catch (error) {
+    catch (error: any) {
         await client.query('ROLLBACK')
         console.error(error)
+        return {
+            success: false,
+            message: error.message
+        }
     }
     finally {
         await client.end()
+    }
+
+    return {
+        success: true,
+        message: "Order created",
+        id: orderId
     }
 }
