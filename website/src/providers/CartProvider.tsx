@@ -216,7 +216,7 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
                     <Divider sx={{ mt: 'auto' }} />
                     <Typography level='title-lg'>
                         Total: {
-                            numericFormatter(products.reduce((acc, cartLine) => acc + cartLine.product.price, 0).toString(), {
+                            numericFormatter(products.reduce((acc, cartLine) => acc + cartLine.product.price * cartLine.quantity, 0).toString(), {
                                 thousandSeparator: ' ',
                                 suffix: ' SEK',
                             })

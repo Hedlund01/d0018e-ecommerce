@@ -50,7 +50,7 @@ export default async function CheckoutCart() {
                 <Typography level="h3" fontWeight="md">
                     Total: {numericFormatter(
                         cart.reduce((acc, cartLine) => {
-                            return acc + cartLine.quantity * cartLine.product.price
+                            return acc + cartLine.quantity * cartLine.product.price 
                         }, 0).toString(), {
                         thousandSeparator: ' ',
                         suffix: ' SEK',

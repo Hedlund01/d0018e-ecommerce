@@ -5,7 +5,6 @@ import { sql } from "@vercel/postgres";
 import { cookies } from "next/headers";
 
 export async function setCartDB(cartLines: CartLine[]) {
-    console.log("Setting cart in database");
     const authResult = await auth();
     if (!authResult) {
         console.log("Authentication failed");
@@ -46,7 +45,6 @@ export async function setQuantityDB(productId: number, quantity: number) {
 }
 
 export async function getCartDB(): Promise<CartLine[]> {
-    console.log("Getting cart from database");
     const authResult = await auth();
     if (authResult === null || authResult.user.id === undefined) {
         console.log("Authentication failed");
@@ -54,7 +52,6 @@ export async function getCartDB(): Promise<CartLine[]> {
     }
     try {
         const result = await sql`SELECT cart_lines.userId, cart_lines.productId, products.name, products.image, products.price, cart_lines.quantity FROM Cart_lines INNER JOIN products ON products.id = cart_lines.productId  WHERE cart_lines.userId = ${Number(authResult.user.id)}`;
-        console.log(result.rows);
         const cartProducts = result.rows.map((row: any) => {
             return {
                 userId: row.userid,

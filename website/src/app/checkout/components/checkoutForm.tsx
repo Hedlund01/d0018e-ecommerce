@@ -1,3 +1,4 @@
+import { checkout } from "@/actions/checkout";
 import { auth } from "@/utils/auth";
 import { Button, FormControl, FormLabel, Input, Sheet, Stack, Typography } from "@mui/joy";
 import { redirect } from "next/navigation";
@@ -9,6 +10,8 @@ export default async function CheckoutForm() {
     }
     async function handleSubmit() {
         "use server"
+        await checkout();
+        
     }
     return (
         <>
