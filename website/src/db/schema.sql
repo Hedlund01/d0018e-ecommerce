@@ -27,7 +27,6 @@ CREATE TABLE IF NOT EXISTS public.cart_lines (
 
 CREATE TABLE IF NOT EXISTS public.order_lines (
     id serial NOT NULL,
-    userid integer NOT NULL,
     status character varying(255) COLLATE pg_catalog."default" NOT NULL,
     quantity integer NOT NULL,
     price numeric(10, 2) NOT NULL,
@@ -38,12 +37,12 @@ CREATE TABLE IF NOT EXISTS public.order_lines (
 
 CREATE TABLE IF NOT EXISTS public.orders (
     id serial NOT NULL,
-    productid integer NOT NULL,
     totalquantity integer NOT NULL,
     createdat timestamp with time zone NOT NULL DEFAULT now(),
     updatedat timestamp with time zone NOT NULL DEFAULT now(),
     totalprice numeric(10, 2) NOT NULL,
     userid integer NOT NULL,
+    status character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT orders_pkey PRIMARY KEY (id)
 );
 
@@ -101,16 +100,6 @@ ALTER TABLE
     IF EXISTS public.order_lines
 ADD
     CONSTRAINT order_lines_productid_fkey FOREIGN KEY (productid) REFERENCES public.products (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE
-    IF EXISTS public.order_lines
-ADD
-    CONSTRAINT order_lines_userid_fkey FOREIGN KEY (userid) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE
-    IF EXISTS public.orders
-ADD
-    CONSTRAINT orders_productid_fkey FOREIGN KEY (productid) REFERENCES public.products (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 ALTER TABLE
     IF EXISTS public.orders
