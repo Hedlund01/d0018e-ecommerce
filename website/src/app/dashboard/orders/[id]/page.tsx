@@ -34,18 +34,29 @@ import Image from "next/image";
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { Delete, PrintDisabled } from "@mui/icons-material";
-import { deleteOrder, getOrders } from "@/actions/orders";
-import { Order, orderSchema } from "@/types/orders";
+import { deleteOrderLines, getOrderLines } from "@/actions/orderLines";
+import { OrderLine, orderLineSchema } from "@/types/order_line";
 import { useState } from "react";
 
-export default function Page() {
-    const [orders, setOrders] = React.useState<Order[]>([]);
+export default function Page({
+    params,
+}: {
+    params: {
+        id: string;
+    };
+}) {
+    const [orderLines, setOrderLines] = React.useState<OrderLine[]>([]);
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
     const router = useRouter();
+
+    const createLink = (id: string) => {
+        return `/dashboard/orders/${id}/create`;
+    };
+
     React.useEffect(() => {
         const localAsync = async () => {
-            const getOrdersResult = await getOrders();
-            setOrders(getOrdersResult);
+            const getOrderLinesResult = await getOrderLines(params.id);
+            setOrderLines(getOrderLinesResult);
         };
         localAsync();
     }, []);
@@ -54,43 +65,15 @@ export default function Page() {
         useState<GridRowSelectionModel>([]);
 
     //Remove the field named emailVerified
-    const rows: GridRowsProp = orders;
-    const columns: GridColDef[] = Object.keys(orderSchema.keyof().Values).map(
-        (key) => {
-            if (key === "id") {
-                return {
-                    field: key,
-                    headerName: unCamelCase(key),
-                    width: 150,
-                    renderCell: (params) => (
-                        <Link href={`/dashboard/orders/${params.row.id}`}>
-                            {params.row.id}
-                        </Link>
-                    ),
-                };
-            }
-            return {
-                field: key,
-                headerName: unCamelCase(key),
-                width: 150,
-            };
-        }
-    );
-    columns.push({
-        field: "action",
-        headerName: "Action",
-        width: 150,
-        renderCell: (params) => (
-            <>
-                <IconButton
-                    onClick={() =>
-                        router.push(`/dashboard/orders/edit/${params.row.id}`)
-                    }
-                >
-                    <EditIcon />
-                </IconButton>
-            </>
-        ),
+    const rows: GridRowsProp = orderLines;
+    const columns: GridColDef[] = Object.keys(
+        orderLineSchema.keyof().Values
+    ).map((key) => {
+        return {
+            field: key,
+            headerName: unCamelCase(key),
+            width: 150,
+        };
     });
 
     function CustomToolbar() {
@@ -120,16 +103,15 @@ export default function Page() {
                 }}
             >
                 <Typography level="h2" component="h1">
-                    Orders
+                    Order Lines
                 </Typography>
-
-                <Link href="/dashboard/orders/create">
+                <Link href={createLink(params.id)}>
                     <Button
                         color="primary"
                         startDecorator={<AddIcon />}
                         size="sm"
                     >
-                        Add Order
+                        Add Order Line
                     </Button>
                 </Link>
             </Box>
@@ -163,7 +145,8 @@ export default function Page() {
                         <DialogTitle>Confirmation</DialogTitle>
                         <Divider />
                         <DialogContent>
-                            Are you sure you want to delete these orders?
+                            Are you sure you want to delete these products from
+                            the order?
                         </DialogContent>
                         <DialogActions>
                             <Button
@@ -171,7 +154,7 @@ export default function Page() {
                                 color="danger"
                                 onClick={async () => {
                                     rowSelectionModel.forEach(async (id) => {
-                                        await deleteOrder(id.toString());
+                                        await deleteOrderLines(id.toString());
                                     });
                                     setOpenDeleteModal(false);
                                     router.refresh();
