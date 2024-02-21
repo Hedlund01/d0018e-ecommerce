@@ -6,14 +6,15 @@ import {
     Product
 } from '@/types/products';
 import { AspectRatio, Button, ButtonGroup, DialogContent, DialogTitle, Divider, Drawer, IconButton, ModalClose, Sheet, Stack, Typography } from '@mui/joy';
-import { customAlphabet } from 'nanoid';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useSnackBar } from '@/providers/alertProvider';
+import DeleteIcon from '@mui/icons-material/Delete';
 import React, { createContext, useContext, useEffect } from 'react';
 import { numericFormatter } from 'react-number-format';
-import DeleteIcon from '@mui/icons-material/Delete';
+
 type CartContextActions = {
     showCart: () => void;
     addToCart: (product: Product) => void;
@@ -37,7 +38,7 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
     const [products, setProducts] = React.useState<CartLine[]>([]);
     const [totalCartQuantity, setTotalCartQuantity] = React.useState<number>(0);
     const { data: session, status } = useSession();
-    const nanoid = customAlphabet('1234567890', 20)
+    const snack = useSnackBar();
 
     useEffect(() => {
         async function setProductsFromCookie() {
@@ -63,15 +64,14 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
     }, [products])
 
 
-
     if (status === 'loading') return <>{children}</>;
 
 
 
     const addToCart = (product: CartLineProduct) => {
+
         const existingProduct = products.find((item) => item.product.id === product.id);
         var storageProducts = null;
-        console.log(addToCart.name, 'adding to cart');
         if (existingProduct) {
             console.log(addToCart.name, 'existing product');
             existingProduct.quantity++;
@@ -80,10 +80,11 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
         } else {
             const productToAdd = { product: product, quantity: 1, userId: Number(session?.user.id) } as CartLine
 
-
             storageProducts = [...products, productToAdd];
         }
         setProducts(storageProducts);
+        snack.showSnackBar(`Product ${product.name} added to the cart`, "success")
+
         if (status === 'authenticated') {
             setCartDB(storageProducts);
         } else {
@@ -133,13 +134,13 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
         setOpen(true);
     }
 
-    
+
 
 
 
 
     return (
-        <CartContext.Provider value={{ showCart, addToCart, removeFromCart, clearCart, setCartLineQuantity: setCartLineQuantity, totalCartQuantity}}>
+        <CartContext.Provider value={{ showCart, addToCart, removeFromCart, clearCart, setCartLineQuantity: setCartLineQuantity, totalCartQuantity }}>
             <Drawer
                 size='md'
                 variant='plain'
@@ -186,7 +187,7 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
                                                     fill
                                                 />
                                             </AspectRatio>
-                                            
+
                                             <Stack spacing={1}>
                                                 <Typography level='title-lg'>{cartLine.product.name}</Typography>
                                                 <Typography level='body-lg'>{numericFormatter(cartLine.product.price.toString(), {
@@ -206,7 +207,7 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
                                                         +
                                                     </IconButton>
                                                 </ButtonGroup>
-                                              
+
 
                                             </Stack>
                                             <IconButton onClick={() => setCartLineQuantity(cartLine, 0)}>
@@ -267,3 +268,4 @@ const useCart = (): CartContextActions => {
 };
 
 export { CartProvider, useCart };
+

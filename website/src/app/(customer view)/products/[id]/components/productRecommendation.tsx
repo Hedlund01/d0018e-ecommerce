@@ -1,6 +1,6 @@
 import { categoryRecommendations } from "@/actions/categoryRecommendations"
 import { Product } from "@/types/products"
-import { Sheet, Typography } from "@mui/joy"
+import { Sheet, Stack, Typography } from "@mui/joy"
 import { useEffect, useState } from "react"
 import ProductCard from "../../components/ProductCard"
 
@@ -10,7 +10,7 @@ export default function ProductRecommendations(props: {
     const [recommendations, setRecommendations] = useState<Product[]>([])
 
     useEffect(() => {
-        categoryRecommendations(props.productCategory).then((products) => {
+        categoryRecommendations(props.productCategory, 10).then((products) => {
             setRecommendations(products)
         })
     }, [props.productCategory])
@@ -23,16 +23,17 @@ export default function ProductRecommendations(props: {
                 sx={{
                     borderRadius: 'sm',
                     padding: '2rem',
+                    marginY: '2rem'
                 }}>
 
-                <Typography level="h2">
-                    Similar products
+                <Typography level="h3" mb={2}>
+                    Other products within category {props.productCategory}
                 </Typography>
-                <div style={{ display: "flex", gap: 2, overflowX: "scroll" }}>
+                <Stack spacing={4} direction="row" sx={{overflowX: "auto"}}>
                     {recommendations.map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
-                </div>
+                </Stack>
             </Sheet>
         </>
     )

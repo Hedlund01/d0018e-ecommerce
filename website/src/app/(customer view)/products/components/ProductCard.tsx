@@ -30,6 +30,9 @@ export default function ProductCard({ product }: {
                         <Typography level="title-lg">
                             {product.name}
                         </Typography>
+                        <Typography level="body-sm">
+                            {product.category}
+                        </Typography>
                         <Rating value={product.review_score} precision={0.1} readOnly size="small" sx={{
                             marginY: 1
                         

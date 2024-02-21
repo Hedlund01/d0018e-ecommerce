@@ -10,7 +10,6 @@ export async function setCartDB(cartLines: CartLine[]) {
         console.log("Authentication failed");
         return;
     }
-    console.log(setCartDB.name, cartLines)
     const parsedCart = await cartLineSchema.array().safeParseAsync(cartLines);
     if (!parsedCart.success) {
         console.log("Invalid cart products", parsedCart.error.message);
@@ -104,7 +103,6 @@ export async function setCartCookie(cartLines: CartLine[]) {
 
 }
 
-// SELECT * FROM cart WHERE id = ${userId}
 export async function getCartCookie() {
     const cookie = cookies().get("cart");
     if (cookie) {
