@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 export const orderLineSchema = z.object({
-    productId: z.number(),
-    price: z.number().nonnegative(),
+    productId: z.coerce.number().positive(),
+    price: z.coerce.number().nonnegative(),
     quantity: z.number().nonnegative(),
-    orderId: z.number(),
+    orderId: z.coerce.number(),
 });
 export type OrderLine = z.infer<typeof orderLineSchema>;
 

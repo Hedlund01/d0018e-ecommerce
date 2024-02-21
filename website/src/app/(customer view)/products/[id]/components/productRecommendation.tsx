@@ -16,13 +16,12 @@ export default function ProductRecommendations(props: {
     }, [props.productCategory])
 
 
-    console.log(recommendations)
     return (
         <>
             <Typography level="h2">
                 Similar products
             </Typography>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", gap: 2, overflowX: "scroll"}}>
                 {recommendations.map((product) => (
                     <ProductCard key={product.id} product={product} />
                 ))}

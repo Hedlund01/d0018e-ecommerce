@@ -20,6 +20,7 @@ type CartContextActions = {
     removeFromCart: (cartLine: CartLine) => void;
     clearCart: () => void;
     setCartLineQuantity: (cartLine: CartLine, quantity: number) => void;
+    totalCartQuantity: number;
 };
 
 const CartContext = createContext({} as CartContextActions);
@@ -34,8 +35,10 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
 }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const [products, setProducts] = React.useState<CartLine[]>([]);
+    const [totalCartQuantity, setTotalCartQuantity] = React.useState<number>(0);
     const { data: session, status } = useSession();
     const nanoid = customAlphabet('1234567890', 20)
+
     useEffect(() => {
         async function setProductsFromCookie() {
             console.log('setting products from cookie');
@@ -55,6 +58,11 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
         }
     }, [session?.user.id])
 
+    useEffect(() => {
+        setTotalCartQuantity(products.reduce((acc, cartLine) => acc + cartLine.quantity, 0))
+    }, [products])
+
+
 
     if (status === 'loading') return <>{children}</>;
 
@@ -63,9 +71,9 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
     const addToCart = (product: CartLineProduct) => {
         const existingProduct = products.find((item) => item.product.id === product.id);
         var storageProducts = null;
-        console.log('adding to cart');
+        console.log(addToCart.name, 'adding to cart');
         if (existingProduct) {
-            console.log('existing product');
+            console.log(addToCart.name, 'existing product');
             existingProduct.quantity++;
 
             storageProducts = [...products];
@@ -75,7 +83,6 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
 
             storageProducts = [...products, productToAdd];
         }
-        console.log(products);
         setProducts(storageProducts);
         if (status === 'authenticated') {
             setCartDB(storageProducts);
@@ -126,12 +133,13 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
         setOpen(true);
     }
 
+    
 
 
 
 
     return (
-        <CartContext.Provider value={{ showCart, addToCart, removeFromCart, clearCart, setCartLineQuantity: setCartLineQuantity }}>
+        <CartContext.Provider value={{ showCart, addToCart, removeFromCart, clearCart, setCartLineQuantity: setCartLineQuantity, totalCartQuantity}}>
             <Drawer
                 size='md'
                 variant='plain'

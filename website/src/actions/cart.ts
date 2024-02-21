@@ -10,6 +10,7 @@ export async function setCartDB(cartLines: CartLine[]) {
         console.log("Authentication failed");
         return;
     }
+    console.log(setCartDB.name, cartLines)
     const parsedCart = await cartLineSchema.array().safeParseAsync(cartLines);
     if (!parsedCart.success) {
         console.log("Invalid cart products", parsedCart.error.message);
@@ -51,8 +52,7 @@ export async function getCartDB(): Promise<CartLine[]> {
         return [];
     }
     try {
-        const result = await sql`SELECT cart_lines.userId, cart_lines.productId, products.name, products.image, products.price, cart_lines.quantity FROM Cart_lines INNER JOIN products ON products.id = cart_lines.productId  WHERE cart_lines.userId = ${Number(authResult.user.id)}`;
-        console.log(result.rows);
+        const result = await sql`SELECT cart_lines.userId, cart_lines.productId, products.name, products.image, products.price, products.category, cart_lines.quantity FROM Cart_lines INNER JOIN products ON products.id = cart_lines.productId  WHERE cart_lines.userId = ${Number(authResult.user.id)}`;
         const cartProducts = result.rows.map((row: any) => {
             return {
                 userId: row.userid,
@@ -61,6 +61,7 @@ export async function getCartDB(): Promise<CartLine[]> {
                     name: row.name,
                     image: row.image,
                     price: Number(row.price),
+                    category: row.category
                 },
                 quantity: row.quantity,
             }
@@ -69,7 +70,7 @@ export async function getCartDB(): Promise<CartLine[]> {
         if (parsedcart.success) {
             return parsedcart.data;
         } else {
-            console.log("Invalid cart products", parsedcart.error.message);
+            console.log(getCartDB.name, "Invalid cart products", parsedcart.error.message);
             return [];
         }
 
@@ -95,7 +96,7 @@ export async function removeCartDB(productId: number) {
 export async function setCartCookie(cartLines: CartLine[]) {
     const parsedCart = await cartLineSchema.array().safeParseAsync(cartLines);
     if (!parsedCart.success) {
-        console.log("Invalid cart products", parsedCart.error.message);
+        console.log(setCartCookie.name, "Invalid cart products", parsedCart.error.message);
         return;
     }
     const cartString = JSON.stringify(parsedCart.data);
@@ -112,7 +113,7 @@ export async function getCartCookie() {
         if (parsedCart.success) {
             return parsedCart.data;
         } else {
-            console.log("Invalid cart cookie", parsedCart.error.message);
+            console.log(getCartCookie.name, "Invalid cart cookie", parsedCart.error.message);
             return [];
         }
 

@@ -2,7 +2,7 @@ import {z} from "zod";
 import { userSchema } from "./user";
 
 export const productSchema = z.object({
-    id: z.number(),
+    id: z.coerce.number().positive(),
     name: z.string().max(255).min(1), 
     description: z.string(),
     price: z.coerce.number().nonnegative(),

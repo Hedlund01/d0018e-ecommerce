@@ -8,10 +8,17 @@ import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { numericFormatter } from "react-number-format";
 import ProductRecommendations from "./components/productRecommendation";
+import { useSession } from "next-auth/react";
+import { currentUserCanRateProduct } from "@/actions/reviews";
+import CreateProductReview from "./components/createProductReview";
 
 export default function Page({ params }: {
     params: { id: number }
 }) {
+
+    const { data: session, status } = useSession();
+
+
     const [product, setProduct] = useState<Product | null>(null)
 
     useEffect(() => {
@@ -22,6 +29,7 @@ export default function Page({ params }: {
                 setProduct(product)
             }
         })
+      
     }, [])
 
     if (product === null) {
@@ -55,6 +63,8 @@ export default function Page({ params }: {
 
 
             <ProductRecommendations productCategory={product.category} />
+
+            <CreateProductReview productId={product.id} />
         </>
     )
 

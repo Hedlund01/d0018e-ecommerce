@@ -6,7 +6,7 @@ import * as React from 'react';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import { Box, IconButton, Sheet, useTheme } from '@mui/joy';
+import { Badge, Box, IconButton, Sheet, useTheme } from '@mui/joy';
 import Header from './components/Header';
 import { UserButton } from './components/UserButton';
 import { useCart } from '@/providers/CartProvider';
@@ -48,7 +48,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <Button
                     variant="plain"
                     color="neutral"
-                    startDecorator={<ShoppingCartIcon />}
+                    startDecorator={<Badge badgeContent={cart.totalCartQuantity}><ShoppingCartIcon /> </Badge>}
                     sx={{ flexDirection: 'column', '--Button-gap': 0 }}
                     onClick={() => cart.showCart()}
                 >
