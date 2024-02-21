@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS public.orders (
     updatedat timestamp with time zone NOT NULL DEFAULT now(),
     totalprice numeric(10, 2) NOT NULL,
     userid integer NOT NULL,
+    status character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT orders_pkey PRIMARY KEY (id)
 );
 
@@ -105,4 +106,129 @@ ALTER TABLE
 ADD
     CONSTRAINT orders_userid_fkey FOREIGN KEY (userid) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION NOT VALID;
 
+-- Triggers
+CREATE
+OR REPLACE FUNCTION update_order_on_orderline_update() RETURNS TRIGGER AS $ $ DECLARE local_quantity int;
+
+local_price int;
+
+BEGIN IF NEW.quantity != OLD.quantity
+OR NEW.price != OLD.price THEN
+SELECT
+    SUM(order_lines.price * order_lines.quantity) INTO local_price
+FROM
+    order_lines
+WHERE
+    orderid = NEW.orderid;
+
+SELECT
+    SUM(order_lines.quantity) INTO local_quantity
+FROM
+    order_lines
+WHERE
+    orderid = NEW.orderid;
+
+UPDATE
+    orders
+SET
+    totalquantity = local_quantity,
+    totalprice = local_price,
+    updatedat = NOW()
+WHERE
+    id = NEW.orderid;
+
+END IF;
+
+RETURN NEW;
+
+END;
+
+$ $ LANGUAGE plpgsql;
+
+CREATE
+OR REPLACE FUNCTION update_order_on_orderline_insert() RETURNS TRIGGER AS $ $ DECLARE local_quantity int;
+
+local_price int;
+
+BEGIN
+SELECT
+    SUM(order_lines.price * order_lines.quantity) INTO local_price
+FROM
+    order_lines
+WHERE
+    orderid = NEW.orderid;
+
+SELECT
+    SUM(order_lines.quantity) INTO local_quantity
+FROM
+    order_lines
+WHERE
+    orderid = NEW.orderid;
+
+UPDATE
+    orders
+SET
+    totalquantity = local_quantity,
+    totalprice = local_price,
+    updatedat = NOW()
+WHERE
+    id = NEW.orderid;
+
+RETURN NEW;
+
+END;
+
+$ $ LANGUAGE plpgsql;
+
+CREATE
+OR REPLACE FUNCTION update_order_on_orderline_delete() RETURNS TRIGGER AS $ $ DECLARE local_quantity int;
+
+local_price int;
+
+BEGIN
+SELECT
+    SUM(order_lines.price * order_lines.quantity) INTO local_price
+FROM
+    order_lines
+WHERE
+    orderid = OLD.orderid;
+
+SELECT
+    SUM(order_lines.quantity) INTO local_quantity
+FROM
+    order_lines
+WHERE
+    orderid = OLD.orderid;
+
+UPDATE
+    orders
+SET
+    totalquantity = local_quantity,
+    totalprice = local_price,
+    updatedat = NOW()
+WHERE
+    id = OLD.orderid;
+
+RETURN OLD;
+
+END;
+
+$ $ LANGUAGE plpgsql;
+
+CREATE
+OR REPLACE TRIGGER order_line_update
+AFTER
+UPDATE
+    ON order_lines FOR EACH ROW EXECUTE PROCEDURE update_order_on_orderline_update();
+
+CREATE
+OR REPLACE TRIGGER order_line_insert
+AFTER
+INSERT
+    ON order_lines FOR EACH ROW EXECUTE PROCEDURE update_order_on_orderline_insert();
+
+CREATE
+OR REPLACE TRIGGER order_line_delete
+AFTER
+    DELETE ON order_lines FOR EACH ROW EXECUTE PROCEDURE update_order_on_orderline_delete();
 END;

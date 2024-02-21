@@ -32,8 +32,8 @@ export async function getOrderLines(orderId: string): Promise<OrderLine[]> {
     ) as OrderLine[];
 }
 
-export async function deleteOrderLines(lineId: string): Promise<void> {
-    await sql`DELETE FROM order_lines WHERE id = ${lineId}`;
+export async function deleteOrderLines(productId: string, orderId: string): Promise<void> {
+    await sql`DELETE FROM order_lines WHERE orderid=${orderId} AND productid=${productId}`;
 }
 
 export async function createOrderLine(
@@ -47,7 +47,9 @@ export async function createOrderLine(
             throw new Error(parsedOrderLine.error.message);
         }
         console.log(parsedOrderLine.data);
-        await sql`INSERT INTO order_lines (orderId, status, productId, quantity, price) VALUES (${parsedOrderLine.data.orderId}, ${parsedOrderLine.data.status}, ${parsedOrderLine.data.productId}, ${parsedOrderLine.data.quantity}, ${parsedOrderLine.data.price})`;
+        await sql`INSERT INTO order_lines (orderId, productId, quantity, price) VALUES (${parsedOrderLine.data.orderId}, ${parsedOrderLine.data.productId}, ${parsedOrderLine.data.quantity}, ${parsedOrderLine.data.price})
+                    ON CONFLICT(productid, orderid) DO UPDATE
+                    SET quantity = order_lines.quantity + ${parsedOrderLine.data.quantity}`;
     } catch (error) {
         console.error(error);
         return;

@@ -9,15 +9,14 @@ export default function Layout({
     children: React.ReactNode;
 }) {
     return (
-        <CssVarsProvider defaultMode="dark" disableTransitionOnChange>
-            <CssBaseline />
+        <>
             <GlobalStyles
                 styles={{
                     ':root': {
                         '--Collapsed-breakpoint': '769px', // form will stretch when viewport is below `769px`
                         '--Cover-width': '50vw', // must be `vw` only
                         '--Form-maxWidth': '800px',
-                        '--Transition-duration': '0.4s', // set to `none` to disable transition
+                        '--Transition-duration': '0.2s', // set to `none` to disable transition
                     },
                 }}
             />
@@ -114,6 +113,6 @@ export default function Layout({
                     },
                 })}
             />
-        </CssVarsProvider>
+        </>
     )
 }
