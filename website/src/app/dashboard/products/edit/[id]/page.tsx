@@ -1,6 +1,6 @@
 import { Sheet, Typography, Stack, Input, Button, FormControl, FormLabel } from "@mui/joy";
 import { forwardRef } from "react";
-import { createUpdateProductSchema } from "@/types/products";
+import { CreateUpdateProduct, createUpdateProductSchema } from "@/types/products";
 import { z } from "zod";
 import { createProduct, getProduct, updateProduct} from "@/actions/products";
 import { redirect } from "next/navigation";
@@ -22,8 +22,9 @@ export default async function Page({ params }: {
             description: rawFormData.description,
             price: Number(rawFormData.price.toString().split(' SEK')[0].replace(" ", "")),
             image: rawFormData.image,
-            quantity: Number(rawFormData.quantity)
-        }
+            quantity: Number(rawFormData.quantity),
+            category: rawFormData.category
+        } as CreateUpdateProduct
         const product = await createUpdateProductSchema.safeParseAsync(unparsedProduct)
         if(!product.success) {
             console.log(product.error)
@@ -69,6 +70,16 @@ export default async function Page({ params }: {
                             />
                         </FormControl>
 
+                        <FormControl>
+                            <FormLabel>Category</FormLabel>
+                            <Input
+
+                                name="category"
+                                type="text"
+                                defaultValue={product?.category}
+                                required
+                            />
+                        </FormControl>
 
                         <FormControl>
                             <FormLabel>Image</FormLabel>

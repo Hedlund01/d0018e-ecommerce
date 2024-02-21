@@ -3,6 +3,7 @@ import { useCart } from "@/providers/CartProvider"
 import { Product } from "@/types/products"
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import { AspectRatio, Button, Card, CardContent, CardOverflow, Chip, Grid, Typography } from "@mui/joy"
+import { Rating } from "@mui/material"
 import Image from "next/image"
 import Link from "next/link"
 import { numericFormatter } from "react-number-format"
@@ -29,6 +30,10 @@ export default function ProductCard({ product }: {
                         <Typography level="title-lg">
                             {product.name}
                         </Typography>
+                        <Rating value={product.review_score} precision={0.1} readOnly size="small" sx={{
+                            marginY: 1
+                        
+                        }} />
                         <Grid
                             container
                             direction="row"
