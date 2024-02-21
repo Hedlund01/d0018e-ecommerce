@@ -1,7 +1,7 @@
 import { Sheet, Typography, Stack, Input, Button, FormControl, FormLabel } from "@mui/joy";
 import { forwardRef } from "react";
 import NumericFormatAdapter from "./NumericFormatAdapter";
-import { createUpdateProductSchema } from "@/types/products";
+import { CreateUpdateProduct, createUpdateProductSchema } from "@/types/products";
 import { z } from "zod";
 import { createProduct } from "@/actions/products";
 import { redirect } from "next/navigation";
@@ -15,8 +15,9 @@ export default function Page() {
             description: rawFormData.description,
             price: Number(rawFormData.price.toString().split(' SEK')[0].replace(" ", "")),
             image: rawFormData.image,
-            quantity: Number(rawFormData.quantity)
-        }
+            quantity: Number(rawFormData.quantity),
+            category: rawFormData.category
+        } as CreateUpdateProduct
         const product = await createUpdateProductSchema.safeParseAsync(unparsedProduct)
         if(!product.success) {
             console.log(product.error)
@@ -59,6 +60,16 @@ export default function Page() {
                                         component: NumericFormatAdapter
                                     }
                                 }}
+                            />
+                        </FormControl>
+
+                        <FormControl>
+                            <FormLabel>Category</FormLabel>
+                            <Input
+
+                                name="category"
+                                type="text"
+                                required
                             />
                         </FormControl>
 

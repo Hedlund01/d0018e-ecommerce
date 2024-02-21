@@ -21,7 +21,7 @@ declare module "next-auth" {
 }
 
 export default {
-    debug: true,
+    debug: false,
     useSecureCookies: process.env.NODE_ENV === "production",
     providers: [
         GitHub,
