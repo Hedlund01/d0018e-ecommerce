@@ -5,7 +5,7 @@ import { createClient } from "@vercel/postgres";
 
 
 
-export async function checkout(userId: string = ""): Promise<{
+export async function checkout(): Promise<{
     success: boolean
     message: string
     id?: number
@@ -19,15 +19,7 @@ export async function checkout(userId: string = ""): Promise<{
         
         };
     }
-    if (userId !== "" && authResult.user.role !== "admin") { 
-        console.log(`${authResult.user.email} is not an admin and cannot checkout for other users!`);
-        return {
-            success: false,
-            message: `${authResult.user.email} is not an admin and cannot checkout for other users!`
-        
-        };
-    }
-    if (userId === "") userId = authResult.user.id as string;
+    const userId = authResult.user.id;
 
     let orderId = null;
     const client = createClient()

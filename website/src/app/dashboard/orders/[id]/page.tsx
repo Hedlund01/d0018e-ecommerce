@@ -50,7 +50,7 @@ export default function Page({
     const router = useRouter();
 
     const createLink = (id: string) => {
-        return `/dashboard/orders/${id}/create`;
+        return `/dashboard/orders/${id}/order_lines/create`;
     };
 
     React.useEffect(() => {
@@ -65,7 +65,12 @@ export default function Page({
         useState<GridRowSelectionModel>([]);
 
     //Remove the field named emailVerified
-    const rows: GridRowsProp = orderLines;
+    const rows: GridRowsProp = orderLines.map((orderLine) => { 
+        return {
+            ...orderLine,
+            id: orderLine.orderId.toString() + "-" + orderLine.productId.toString(),
+        };
+    });
     const columns: GridColDef[] = Object.keys(
         orderLineSchema.keyof().Values
     ).map((key) => {
@@ -153,8 +158,10 @@ export default function Page({
                                 variant="solid"
                                 color="danger"
                                 onClick={async () => {
-                                    rowSelectionModel.forEach(async (id) => {
-                                        await deleteOrderLines(id.toString());
+                                    rowSelectionModel.forEach(async (row) => {
+                                        const [orderId, productId] = row.toString().split("-")
+                                        console.log(productId, orderId);    
+                                        await deleteOrderLines(productId, orderId);
                                     });
                                     setOpenDeleteModal(false);
                                     router.refresh();

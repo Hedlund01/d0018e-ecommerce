@@ -33,7 +33,6 @@ export default function Page({
         console.log(params.id);
         const unparsedOrderLine = {
             orderId: Number(params.id),
-            status: "none",
             productId: Number(rawFormData.productId),
             price:
                 Number(
