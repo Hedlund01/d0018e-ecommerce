@@ -1,6 +1,6 @@
 import { categoryRecommendations } from "@/actions/categoryRecommendations"
 import { Product } from "@/types/products"
-import { Typography } from "@mui/joy"
+import { Sheet, Typography } from "@mui/joy"
 import { useEffect, useState } from "react"
 import ProductCard from "../../components/ProductCard"
 
@@ -18,14 +18,22 @@ export default function ProductRecommendations(props: {
 
     return (
         <>
-            <Typography level="h2">
-                Similar products
-            </Typography>
-            <div style={{ display: "flex", gap: 2, overflowX: "scroll"}}>
-                {recommendations.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                ))}
-            </div>
+            <Sheet
+                variant="soft"
+                sx={{
+                    borderRadius: 'sm',
+                    padding: '2rem',
+                }}>
+
+                <Typography level="h2">
+                    Similar products
+                </Typography>
+                <div style={{ display: "flex", gap: 2, overflowX: "scroll" }}>
+                    {recommendations.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
+                </div>
+            </Sheet>
         </>
     )
 
