@@ -1,6 +1,7 @@
 "use server"
 
 import { OrderLine, orderLineSchema } from "@/types/order_line";
+import { GetReviewDTO, getReviewDTOSchema } from "@/types/review";
 import { auth } from "@/utils/auth";
 import { sql } from "@vercel/postgres";
 
@@ -33,7 +34,7 @@ export async function getCurrentUserBoughtProducts(): Promise<OrderLine[]> {
         return parsedProducts
 
     } catch (error) {
-        console.log(getCurrentUserBoughtProducts.name, error)
+        console.log(getCurrentUserBoughtProducts.name, "error",error)
         return []
     }
 
@@ -41,6 +42,27 @@ export async function getCurrentUserBoughtProducts(): Promise<OrderLine[]> {
 
 }
 
+export async function getPreviousProductReviews(productId: number, limit: number = 10, offset: number = 0): Promise<GetReviewDTO[]> {
+    if (offset < 0) {
+        offset = 0
+    }
+    if (limit < 0) {
+        limit = 0
+    }
+    if (limit > 100) {
+        limit = 100
+    }
+    try {
+        const r = await sql`SELECT review_lines.created_at, review_lines.review_text, review_lines.rating, users.name, users.image FROM review_lines INNER JOIN users ON review_lines.userid = users.id WHERE productid=${productId.toString()} ORDER BY review_lines.created_at DESC LIMIT ${limit} OFFSET ${offset}`
+
+        const parsedReviews = await getReviewDTOSchema.array().parseAsync(r.rows);
+        return parsedReviews
+
+    } catch (error) {
+        console.log(getPreviousProductReviews.name, "error", error)
+        return []
+    }
+}
 
 export async function reviewProductForCurrentUser(productId: Number, reviewText: string, rating: number): Promise<{
     success: boolean,

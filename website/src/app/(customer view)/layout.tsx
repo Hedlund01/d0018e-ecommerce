@@ -92,9 +92,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
                 <Sheet sx={(theme) => ({
                     p: 2,
-                    height: `calc(100vh - ${headerHeight})`,
+                    height: `calc(100% - ${headerHeight})`,
                     [breakpoint]: {
-                        height: `calc(100vh - ${headerHeight} -${footerHeight})`,
+                        height: `calc(100% - ${headerHeight} -${footerHeight})`,
                     },
                     backgroundColor: theme.vars.palette.background.body
                 })}>

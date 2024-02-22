@@ -34,13 +34,7 @@ export default function CreateProductReview(props: {
 
     return (
         <>
-            <Sheet
-                variant="soft"
-                sx={{
-                    borderRadius: 'sm',
-                    padding: '2rem',
-                }}>
-
+     
                 <Typography level="h3">
                     Create a review
                 </Typography>
@@ -55,16 +49,15 @@ export default function CreateProductReview(props: {
                         }} />
 
                         <FormControl>
-                            <FormLabel>Label</FormLabel>
-                            <Textarea placeholder="Placeholder" minRows={2} value={review} onChange={(event) => setReview(event.target.value)} />
-                            <FormHelperText>This is a helper text.</FormHelperText>
+                            <FormLabel>Review</FormLabel>
+                            <Textarea placeholder="Write here" minRows={2} value={review} onChange={(event) => setReview(event.target.value)} />
+                            <FormHelperText>Leave a review for product.</FormHelperText>
                         </FormControl>
 
                         <Button type="submit">Submit </Button>
                     </Stack>
                 </form>
 
-            </Sheet>
         </>
 
     )
