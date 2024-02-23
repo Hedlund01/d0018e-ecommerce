@@ -8,10 +8,10 @@ import {
     FormLabel,
 } from "@mui/joy";
 import NumericFormatAdapter from "./NumericFormatAdapter";
-import { createNewOrderLineSchema } from "@/types/order_line";
 import { createOrderLine } from "@/actions/orderLines";
 import { redirect } from "next/navigation";
 import { getProduct } from "@/actions/products";
+import { OrderLine, createUpdateOrderLineSchema } from "@/types/order_line";
 
 export default function Page({
     params,
@@ -32,15 +32,15 @@ export default function Page({
 
         console.log(params.id);
         const unparsedOrderLine = {
-            orderId: Number(params.id),
-            productId: Number(rawFormData.productId),
+            orderid: Number(params.id),
+            productid: Number(rawFormData.productId),
             price:
                 Number(
                     product.price.toString().split(" SEK")[0].replace(" ", "")
                 ) * Number(rawFormData.quantity),
             quantity: Number(rawFormData.quantity),
-        };
-        const orderLine = await createNewOrderLineSchema.safeParseAsync(
+        } as OrderLine;
+        const orderLine = await createUpdateOrderLineSchema.safeParseAsync(
             unparsedOrderLine
         );
         if (!orderLine.success) {
