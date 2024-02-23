@@ -1,13 +1,13 @@
-import { Box, Typography, IconButton } from "@mui/joy";
-import ColorSchemeToggle from "./ColorSchemeToggle";
-import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
-export default function Logo( ) {
+
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import { Box, IconButton, Typography } from "@mui/joy";
+export default function Logo() {
     return (
         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-            <IconButton variant="soft" color="primary" size="sm" >
-                <BrightnessAutoRoundedIcon />
+            <IconButton variant="soft" color="neutral" size="sm" >
+                <CurrencyExchangeIcon />
             </IconButton>
-            <Typography level="title-lg">Acme Co.</Typography>
+            <Typography level="title-lg">Group 5 Co.</Typography>
         </Box>
     )
 }

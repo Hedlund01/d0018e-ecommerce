@@ -1,7 +1,7 @@
 import { Box } from "@mui/joy";
 import CheckoutCart from "./components/checkoutCart";
 import CheckoutForm from "./components/checkoutForm";
-import Footer from "./components/footer";
+import Footer from "../../components/footer";
 import Header from "./components/header";
 
 export default function Page() {

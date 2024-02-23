@@ -2,6 +2,7 @@
 import { CssVarsProvider, CssBaseline, Box, Typography, GlobalStyles } from "@mui/joy";
 import ColorSchemeToggle from "@/components/ColorSchemeToggle";
 import Logo from "@/components/Logo";
+import Footer from "@/components/footer";
 
 export default function Layout({
     children,
@@ -83,11 +84,7 @@ export default function Layout({
                     >
                         {children}
                     </Box>
-                    <Box component="footer" sx={{ py: 3 }}>
-                        <Typography level="body-xs" textAlign="center">
-                            © Acme Co. {new Date().getFullYear()}
-                        </Typography>
-                    </Box>
+                    <Footer />
                 </Box>
             </Box>
             <Box

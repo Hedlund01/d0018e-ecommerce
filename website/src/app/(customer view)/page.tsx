@@ -1,42 +1,34 @@
-import * as React from 'react';
-import Sheet from '@mui/joy/Sheet';
-import Typography from '@mui/joy/Typography';
-import FormControl from '@mui/joy/FormControl';
-import FormLabel from '@mui/joy/FormLabel';
-import Input from '@mui/joy/Input';
-import Button from '@mui/joy/Button';
-import Link from '@mui/joy/Link';
-import { sql } from '@vercel/postgres';
-import { readFile } from 'fs/promises';
+import { getProducts, getProductsCached } from "@/actions/products";
+import { Product } from "@/types/products";
+import { Box, Sheet } from "@mui/joy";
+import ProductCard from "./products/components/ProductCard";
+import { cache } from "react";
 
-export default async function Home() {
+export const revalidate = 3600 // revalidate the data at most every hour
 
-  // try {
-  //   console.log("Try to connect to DB")
-  //   const res = await sql`SELECT * FROM products WHERE id = 1`
-  //   console.log("res", res)
-  //   if (res.rowCount === 0) {
-  //     throw new Error("No products")
-  //   }
-  //   console.log("Connected to DB")
-  // } catch (error) {
-  //   //Run DB migration
-  //   console.log("Run migration")
-  //   var schema = (await readFile('./src/db/schema.sql', 'utf-8')).toString().split(';').flatMap((query) => query.trim().replaceAll('\n', '').replaceAll('  ', '').replaceAll(',', ', ').concat(';')).filter((query) => query.length > 1)
-    
-  //   // Run the query
-  //     schema.forEach(async (query) => {
-  //       try {
-  //         console.log("Run query", query)
-  //         await sql.query(query)	
-  //       } catch (error) {
-  //         console.log("error", error)
-  //       }
-  //     })
+export default async function Page() {
+    const products: Product[] = await getProductsCached();
+    return (
+        <>
+            <h1>Products</h1>
+            <Sheet
+                variant="soft"
+                sx={{
+                    borderRadius: 'sm',
+                    padding: '2rem',
+                }}>
+                <Box sx={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                    gridAutoRows: '1fr',
+                    gap: '1rem'
 
-  // }
-
-  return (
-      <p>hej</p>
-  );
+                }}>
+                    {products.map((product) => {
+                        return <ProductCard key={ product.id}  product={product} />
+                    })}
+                </Box>
+            </Sheet>
+        </>
+    );
 }

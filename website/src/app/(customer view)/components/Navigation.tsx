@@ -26,7 +26,7 @@ export default function Navigation() {
 
     return (
       <Stack direction={xs ? "column" : "row"} gap={2}>
-        <Link href="/products">
+        <Link href="/">
           <Button size="lg" variant="outlined" color="neutral">
             Products
           </Button>
