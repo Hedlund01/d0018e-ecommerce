@@ -1,8 +1,8 @@
 "use server";
 import {
-    CreateNewOrderLine,
+    CreateUpdateOrderLine,
     OrderLine,
-    createNewOrderLineSchema,
+    createUpdateOrderLineSchema,
     orderLineSchema,
 } from "@/types/order_line";
 import { sql } from "@vercel/postgres";
@@ -37,17 +37,17 @@ export async function deleteOrderLines(productId: string, orderId: string): Prom
 }
 
 export async function createOrderLine(
-    orderLine: CreateNewOrderLine
+    orderLine: CreateUpdateOrderLine
 ): Promise<void> {
     try {
-        const parsedOrderLine = await createNewOrderLineSchema.safeParseAsync(
+        const parsedOrderLine = await createUpdateOrderLineSchema.safeParseAsync(
             orderLine
         );
         if (!parsedOrderLine.success) {
             throw new Error(parsedOrderLine.error.message);
         }
         console.log(parsedOrderLine.data);
-        await sql`INSERT INTO order_lines (orderId, productId, quantity, price) VALUES (${parsedOrderLine.data.orderId}, ${parsedOrderLine.data.productId}, ${parsedOrderLine.data.quantity}, ${parsedOrderLine.data.price})
+        await sql`INSERT INTO order_lines (orderId, productId, quantity, price) VALUES (${parsedOrderLine.data.orderid}, ${parsedOrderLine.data.productid}, ${parsedOrderLine.data.quantity}, ${parsedOrderLine.data.price})
                     ON CONFLICT(productid, orderid) DO UPDATE
                     SET quantity = order_lines.quantity + ${parsedOrderLine.data.quantity}`;
     } catch (error) {
