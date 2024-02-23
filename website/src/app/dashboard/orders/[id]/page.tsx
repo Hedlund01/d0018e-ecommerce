@@ -68,7 +68,7 @@ export default function Page({
     const rows: GridRowsProp = orderLines.map((orderLine) => { 
         return {
             ...orderLine,
-            id: orderLine.orderId.toString() + "-" + orderLine.productId.toString(),
+            id: orderLine.orderid.toString() + "-" + orderLine.productid.toString(),
         };
     });
     const columns: GridColDef[] = Object.keys(

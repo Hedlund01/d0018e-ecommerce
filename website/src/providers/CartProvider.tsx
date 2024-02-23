@@ -6,20 +6,22 @@ import {
     Product
 } from '@/types/products';
 import { AspectRatio, Button, ButtonGroup, DialogContent, DialogTitle, Divider, Drawer, IconButton, ModalClose, Sheet, Stack, Typography } from '@mui/joy';
-import { customAlphabet } from 'nanoid';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useSnackBar } from '@/providers/alertProvider';
+import DeleteIcon from '@mui/icons-material/Delete';
 import React, { createContext, useContext, useEffect } from 'react';
 import { numericFormatter } from 'react-number-format';
-import DeleteIcon from '@mui/icons-material/Delete';
+
 type CartContextActions = {
     showCart: () => void;
     addToCart: (product: Product) => void;
     removeFromCart: (cartLine: CartLine) => void;
     clearCart: () => void;
     setCartLineQuantity: (cartLine: CartLine, quantity: number) => void;
+    totalCartQuantity: number;
 };
 
 const CartContext = createContext({} as CartContextActions);
@@ -34,8 +36,10 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
 }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const [products, setProducts] = React.useState<CartLine[]>([]);
+    const [totalCartQuantity, setTotalCartQuantity] = React.useState<number>(0);
     const { data: session, status } = useSession();
-    const nanoid = customAlphabet('1234567890', 20)
+    const snack = useSnackBar();
+
     useEffect(() => {
         async function setProductsFromCookie() {
             console.log('setting products from cookie');
@@ -55,28 +59,32 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
         }
     }, [session?.user.id])
 
+    useEffect(() => {
+        setTotalCartQuantity(products.reduce((acc, cartLine) => acc + cartLine.quantity, 0))
+    }, [products])
+
 
     if (status === 'loading') return <>{children}</>;
 
 
 
     const addToCart = (product: CartLineProduct) => {
+
         const existingProduct = products.find((item) => item.product.id === product.id);
         var storageProducts = null;
-        console.log('adding to cart');
         if (existingProduct) {
-            console.log('existing product');
+            console.log(addToCart.name, 'existing product');
             existingProduct.quantity++;
 
             storageProducts = [...products];
         } else {
             const productToAdd = { product: product, quantity: 1, userId: Number(session?.user.id) } as CartLine
 
-
             storageProducts = [...products, productToAdd];
         }
-        console.log(products);
         setProducts(storageProducts);
+        snack.showSnackBar(`Product ${product.name} added to the cart`, "success")
+
         if (status === 'authenticated') {
             setCartDB(storageProducts);
         } else {
@@ -130,8 +138,9 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
 
 
 
+
     return (
-        <CartContext.Provider value={{ showCart, addToCart, removeFromCart, clearCart, setCartLineQuantity: setCartLineQuantity }}>
+        <CartContext.Provider value={{ showCart, addToCart, removeFromCart, clearCart, setCartLineQuantity: setCartLineQuantity, totalCartQuantity }}>
             <Drawer
                 size='md'
                 variant='plain'
@@ -178,7 +187,7 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
                                                     fill
                                                 />
                                             </AspectRatio>
-                                            
+
                                             <Stack spacing={1}>
                                                 <Typography level='title-lg'>{cartLine.product.name}</Typography>
                                                 <Typography level='body-lg'>{numericFormatter(cartLine.product.price.toString(), {
@@ -198,7 +207,7 @@ const CartProvider: React.FC<CartContextProviderProps> = ({
                                                         +
                                                     </IconButton>
                                                 </ButtonGroup>
-                                              
+
 
                                             </Stack>
                                             <IconButton onClick={() => setCartLineQuantity(cartLine, 0)}>
@@ -259,3 +268,4 @@ const useCart = (): CartContextActions => {
 };
 
 export { CartProvider, useCart };
+

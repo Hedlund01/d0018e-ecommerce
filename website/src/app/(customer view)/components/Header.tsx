@@ -11,7 +11,7 @@ import ColorSchemeToggle from '@/components/ColorSchemeToggle';
 import Logo from '@/components/Logo';
 import Navigation from './Navigation';
 import { UserButton } from './UserButton';
-import { Button, IconButton } from '@mui/joy';
+import { Badge, Button, IconButton } from '@mui/joy';
 import { useCart } from '@/providers/CartProvider';
 
 
@@ -73,7 +73,9 @@ export default function Header({ drawerOpen, setDrawerOpen }: { drawerOpen: bool
                     <IconButton
                     onClick={() => cart.showCart()}
                     >
-                        <ShoppingCartIcon />
+                        <Badge badgeContent={cart.totalCartQuantity} color="primary">
+                            <ShoppingCartIcon />
+                            </Badge>
                     </IconButton>
                 </Box>
            

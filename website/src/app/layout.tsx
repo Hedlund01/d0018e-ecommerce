@@ -17,11 +17,11 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       <body>
         <NextAuthProvider>
           <ThemeRegistry>
-            <CartProvider>
-              <SnackBarProvider>
+            <SnackBarProvider>
+              <CartProvider>
                 {children}
-              </SnackBarProvider>
-            </CartProvider>
+              </CartProvider>
+            </SnackBarProvider>
           </ThemeRegistry>
         </NextAuthProvider>
       </body>
