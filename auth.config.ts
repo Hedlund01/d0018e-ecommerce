@@ -24,8 +24,8 @@ export default {
     debug: false,
     useSecureCookies: process.env.NODE_ENV === "production",
     providers: [
-        GitHub,
-        Authentik({ clientId: process.env.AUTHENTIK_ID, clientSecret: process.env.AUTHENTIK_SECRET, issuer: process.env.AUTHENTIK_ISSUER})
+        GitHub({ clientId: process.env.GITHUB_ID, clientSecret: process.env.GITHUB_SECRET }),
+        Authentik({ clientId: process.env.AUTHENTIK_ID, clientSecret: process.env.AUTHENTIK_SECRET, issuer: process.env.AUTHENTIK_ISSUER })
     ].filter(Boolean) as NextAuthConfig["providers"],
     session: { strategy: "database" },
     callbacks: {
