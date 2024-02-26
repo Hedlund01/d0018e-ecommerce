@@ -232,3 +232,64 @@ OR REPLACE TRIGGER order_line_delete
 AFTER
     DELETE ON order_lines FOR EACH ROW EXECUTE PROCEDURE update_order_on_orderline_delete();
 END;
+
+CREATE OR REPLACE TRIGGER review_line_deletion_trigger
+    AFTER DELETE
+    ON public.review_lines
+    FOR EACH ROW
+    EXECUTE FUNCTION public.review_deletion();
+
+CREATE OR REPLACE TRIGGER review_line_inserion_trigger
+    AFTER INSERT
+    ON public.review_lines
+    FOR EACH ROW
+    EXECUTE FUNCTION public.review_creation();
+
+CREATE OR REPLACE FUNCTION public.review_creation()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+ 
+
+DECLARE local_average NUMERIC(10,2);
+BEGIN
+	SELECT AVG(rating) INTO local_average FROM review_lines WHERE productid= NEW.productid;
+
+	UPDATE products	
+		SET review_score = local_average
+		WHERE id = NEW.productid;
+		
+	RETURN NEW;
+END;
+$BODY$;
+
+ALTER FUNCTION public.review_creation()
+    OWNER TO "default";
+
+
+CREATE OR REPLACE FUNCTION public.review_deletion()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+ 
+
+DECLARE local_average NUMERIC(10,2);
+BEGIN
+	SELECT AVG(rating)  INTO local_average
+		FROM review_lines
+		WHERE productid = OLD.productid;
+
+	UPDATE products
+		SET review_score = local_average
+		WHERE id = OLD.productid;
+	
+	RETURN OLD;
+END;
+$BODY$;
+
+ALTER FUNCTION public.review_deletion()
+    OWNER TO "default";
