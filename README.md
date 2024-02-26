@@ -1,45 +1,27 @@
-# Joy UI - Next.js App Router with TypeScript
+# D0018E LTU - Ecommerce store
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This project is an e-commerce website, focusing primarily on database part of the back-end.  Key functionalities include inventory display, purchase and order management, user and administrator view separation, and user interaction through reviews.
+
+The project uses [Next.js](https://nextjs.org/) with Typescript and [@vercel/postgres](https://vercel.com/docs/storage/vercel-postgres/sdk) for database connection. The front-end uses [joy UI](https://mui.com/joy-ui/getting-started/) and [MUI X Data Grid](https://mui.com/x/react-data-grid/). The project is meant to be hosted on [Vercel](https://vercel.com), with a CI/CD pipeline that automatically updates the project with each new commit to the main branch in this GitHub repository.
+
+The database schema consists of User, Order, Product, Cart and Review tables, with the User tables storing authentication information and the Product and Order tables storing information about products and orders respectively.
+
 
 ## How to use
 
-Download the example [or clone the repo](https://github.com/mui/material-ui):
+Download [or clone the repo](https://github.com/Hedlund01/d0018e-ecommerce)
 
-<!-- #default-branch-switch -->
-
-```bash
-curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/joy-ui-nextjs-ts
-cd joy-ui-nextjs-ts
-```
 
 Install it and run:
 
 ```bash
-npm install
-npm run dev
+yarn
+yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your web browser to see the result.
 
-or:
-
-<!-- #default-branch-switch -->
-
-[![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/mui/material-ui/tree/master/examples/joy-ui-nextjs-ts)
-
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/mui/material-ui/tree/master/examples/joy-ui-nextjs-ts)
 
 ## Learn more
 
-To learn more about this example:
-
-- [Next.js documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Customizing Joy UI](https://mui.com/joy-ui/customization/approaches/) - approaches to customizing Joy UI.
-
-## What's next?
-
-<!-- #default-branch-switch -->
-
-You now have a working example project.
-You can head back to the documentation and continue by browsing the [templates](https://mui.com/joy-ui/getting-started/templates/) section.
+To learn more about this project go to [docs/report.md](https://github.com/Hedlund01/d0018e-ecommerce/blob/main/docs/report.md)
