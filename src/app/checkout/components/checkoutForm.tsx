@@ -23,9 +23,8 @@ export default async function CheckoutForm() {
 	async function handleSubmit() {
 		"use server";
         const res = await checkout();
-        console.log(res);
 		if (res.success) {
-			redirect(`/orders/${res.id}`);
+			redirect(`/orders`);
 		} else {
 			console.log(CheckoutForm.name, res.message);
 			error = res.message;
