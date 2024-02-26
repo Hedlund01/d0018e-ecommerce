@@ -6,13 +6,14 @@ import ProductCard from "../../components/ProductCard"
 import { useMediaQuery } from "@mui/material"
 
 export default function ProductRecommendations(props: {
-    productCategory: string
+    productCategory: string;
+    excludeProductIds?: number[];
 }) {
     const [recommendations, setRecommendations] = useState<Product[]>([])
     const smallScreen = useMediaQuery((theme: any) => theme.breakpoints.down('md'))
     useEffect(() => {
         categoryRecommendations(props.productCategory, 10).then((products) => {
-            setRecommendations(products)
+            setRecommendations(products.filter((product) => product.id !== props.excludeProductIds?.find((id) => id === product.id)))
         })
     }, [props.productCategory])
 

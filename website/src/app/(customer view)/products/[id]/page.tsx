@@ -1,22 +1,21 @@
 "use client";
 import { getProduct } from "@/actions/products";
 import LoadingIndicator from "@/components/LoadingIndicator";
+import { useCart } from "@/providers/CartProvider";
 import { Product } from "@/types/products";
 import { Box, Button, Sheet, Typography } from "@mui/joy";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { numericFormatter } from "react-number-format";
-import ProductRecommendations from "./components/productRecommendation";
-import { useSession } from "next-auth/react";
-import { currentUserCanRateProduct } from "@/actions/reviews";
 import CreateProductReview from "./components/createProductReview";
 import PreviousProductReviews from "./components/previousProductReviews";
-import { useCart } from "@/providers/CartProvider";
+import ProductRecommendations from "./components/productRecommendation";
 
 export default function Page({ params }: { params: { id: number } }) {
-    const { data: session, status } = useSession();
-    const cart = useCart();
+  const { data: session, status } = useSession();
+  const cart = useCart();
 
   const [product, setProduct] = useState<Product | null>(null);
 
@@ -38,8 +37,8 @@ export default function Page({ params }: { params: { id: number } }) {
     <>
       <Box
         sx={{
-                  display: "grid",
-            gap: "1rem",
+          display: "grid",
+          gap: "1rem",
           gridTemplateAreas: {
             md: `
             "Product Product Reviews RelatedProducts" 
@@ -61,6 +60,7 @@ export default function Page({ params }: { params: { id: number } }) {
         }}
       >
         <Sheet
+          variant="soft"
           sx={{
             borderRadius: "sm",
             padding: "2rem",
@@ -89,7 +89,7 @@ export default function Page({ params }: { params: { id: number } }) {
         </Sheet>
 
         <Sheet
-        variant="soft"
+          variant="soft"
           sx={{
             borderRadius: "sm",
             padding: "2rem",
@@ -97,19 +97,18 @@ export default function Page({ params }: { params: { id: number } }) {
           }}
         >
           <PreviousProductReviews productId={product.id} />
+
+
         </Sheet>
 
-              <Sheet
-                  variant="soft"
+        <Box
           sx={{
-            borderRadius: "sm",
-            padding: "2rem",
+
             gridArea: "CreateReview",
           }}>
 
-        <CreateProductReview productId={product.id} />
-        </Sheet>
-
+          <CreateProductReview productId={product.id} />
+        </Box>
         <Sheet
           variant="soft"
           sx={{
@@ -118,9 +117,9 @@ export default function Page({ params }: { params: { id: number } }) {
             gridArea: "RelatedProducts",
           }}
         >
-          <ProductRecommendations productCategory={product.category} />
+          <ProductRecommendations productCategory={product.category} excludeProductIds={[product.id]}/>
         </Sheet>
-      </Box>
+      </Box >
     </>
   );
 }

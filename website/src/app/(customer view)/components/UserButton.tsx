@@ -1,20 +1,16 @@
 "use client";
-import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
+import InventoryIcon from '@mui/icons-material/Inventory';
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
-import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import {
   Avatar,
   Box,
   Button,
   Dropdown,
-  IconButton,
   ListDivider,
   Menu,
   MenuButton,
   MenuItem,
-  Stack,
-  Typography,
+  Typography
 } from "@mui/joy";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -23,23 +19,7 @@ export function UserButton() {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return (
-      <Button
-        variant="plain"
-        size="sm"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-        disabled
-      >
-        <Avatar />
-        <Typography sx={{ display: { xs: "flex", sm: "none" } }}>
-          User
-        </Typography>
-      </Button>
-    );
+    return null;
   }
 
   if (status === "unauthenticated") {
@@ -68,7 +48,7 @@ export function UserButton() {
           >
             {session.user.name &&
               session.user.name?.split(" ")[0][0] +
-                session.user.name?.split(" ")[1][0]}
+              session.user.name?.split(" ")[1][0]}
           </Avatar>
           <Typography sx={{ display: { xs: "flex", sm: "none" } }}>
             User
@@ -96,7 +76,7 @@ export function UserButton() {
               >
                 {session.user.name &&
                   session.user.name?.split(" ")[0][0] +
-                    session.user.name?.split(" ")[1][0]}
+                  session.user.name?.split(" ")[1][0]}
               </Avatar>
               <Box sx={{ ml: 1.5 }}>
                 <Typography level="title-sm" textColor="text.primary">
@@ -108,13 +88,21 @@ export function UserButton() {
               </Box>
             </Box>
           </MenuItem>
+          <Link href="/orders" style={{
+            textDecoration: "none"
+          }}>
+            <MenuItem>
+              <InventoryIcon />
+              Orders
+            </MenuItem>
+          </Link>
           <ListDivider />
           <MenuItem onClick={() => signOut()}>
             <LogoutRoundedIcon />
             Log out
           </MenuItem>
         </Menu>
-      </Dropdown>
+      </Dropdown >
     );
   }
 }

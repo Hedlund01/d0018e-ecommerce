@@ -3,15 +3,37 @@
 import {
     CreateNewOrder,
     CreateUpdateOrder,
-    createUpdateOrderSchema,
+    Order,
     createNewOrderSchema,
+    createUpdateOrderSchema,
+    orderSchema,
 } from "@/types/orders";
-import { Order, orderSchema } from "@/types/orders";
 import { sql } from "@vercel/postgres";
-import { z } from "zod";
+import { revalidatePath } from "next/cache";
 
 export async function getOrders(): Promise<Order[]> {
     const result = await sql`SELECT * FROM orders`;
+    const orders = await Promise.all(
+        result.rows.map(async (order: any) => {
+            order.userId = parseInt(order.userid);
+            order.totalQuantity = parseInt(order.totalquantity);
+            order.totalPrice = parseFloat(order.totalprice);
+            order.createdAt = new Date(order.createdat);
+            order.updatedAt = new Date(order.updatedat);
+            const parsedOrder = await orderSchema.safeParseAsync(order);
+            if (!parsedOrder.success) {
+                console.error(parsedOrder.error);
+                return null;
+            } else {
+                return parsedOrder.data;
+            }
+        })
+    );
+    return orders.flatMap((order) => (order ? [order] : [])) as Order[];
+}
+
+export async function getOrdersByUserId(userId: number): Promise<Order[]> {
+    const result = await sql`SELECT * FROM orders WHERE userId = ${userId}`;
     const orders = await Promise.all(
         result.rows.map(async (order: any) => {
             order.userId = parseInt(order.userid);
@@ -54,12 +76,12 @@ export async function createOrder(order: CreateNewOrder): Promise<void> {
             throw new Error(parsedOrder.error.message);
         }
         await sql`INSERT INTO Orders (userId, createdAt, updatedAt, status, totalPrice, totalQuantity) 
-        VALUES ( ${
-            parsedOrder.data.userId
-        }, ${parsedOrder.data.createdAt.toISOString()}, ${parsedOrder.data.updatedAt.toISOString()}, 
-            ${parsedOrder.data.status}, ${parsedOrder.data.totalPrice}, ${
-            parsedOrder.data.totalQuantity
-        })`;
+        VALUES ( ${parsedOrder.data.userId
+            }, ${parsedOrder.data.createdAt.toISOString()}, ${parsedOrder.data.updatedAt.toISOString()}, 
+            ${parsedOrder.data.status}, ${parsedOrder.data.totalPrice}, ${parsedOrder.data.totalQuantity
+            })`;
+        revalidatePath("dashboard/orders")
+        revalidatePath("/orders")
     } catch (error) {
         console.log(error);
     }
@@ -75,13 +97,14 @@ export async function updateOrder(
             throw new Error(parsedOrder.error.message);
         }
         await sql`UPDATE orders SET 
-        userId=${
-            parsedOrder.data.userId
-        }, updatedAt=${parsedOrder.data.updatedAt.toISOString()}, 
-        status=${parsedOrder.data.status}, totalPrice=${
-            parsedOrder.data.totalPrice
-        }, totalQuantity=${parsedOrder.data.totalQuantity}
+        userId=${parsedOrder.data.userId
+            }, updatedAt=${parsedOrder.data.updatedAt.toISOString()}, 
+        status=${parsedOrder.data.status}, totalPrice=${parsedOrder.data.totalPrice
+            }, totalQuantity=${parsedOrder.data.totalQuantity}
         WHERE id=${id}`;
+        revalidatePath("/dashboard/orders")
+        revalidatePath(`/dashboard/orders/edit/${id}`)
+        revalidatePath(`/orders`)
     } catch (error) {
         console.log(error);
     }
@@ -90,6 +113,8 @@ export async function updateOrder(
 export async function deleteOrder(id: string): Promise<void> {
     try {
         await sql`DELETE FROM orders WHERE id=${id}`;
+        revalidatePath("/dashboard/orders")
+        revalidatePath(`/orders`)
     } catch (error) {
         console.log(error);
     }

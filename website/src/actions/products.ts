@@ -3,11 +3,11 @@
 import { CreateUpdateProduct, createUpdateProductSchema } from "@/types/products"
 import { Product, productSchema } from "@/types/products"
 import { sql } from "@vercel/postgres"
+import { revalidatePath } from "next/cache"
 import { cache } from "react"
 
 export async function getProducts(): Promise<Product[]>{
     const result = await sql`SELECT * FROM products`;
-    console.log(result)
     const products = await Promise.all(result.rows.map(async (product: any) => {
         product.price = parseFloat(product.price)
         const parsedProduct = await productSchema.safeParseAsync(product);
@@ -44,7 +44,6 @@ export const getProductsCached = cache(async () => {
 export async function getProduct(id: string): Promise<Product | undefined> {
     try {
         const product = await sql`SELECT * FROM products WHERE id = ${id}`
-        product.rows[0].price = parseFloat(product.rows[0].price)
         const parsedpProduct = await productSchema.parseAsync(product.rows[0])
         return parsedpProduct
     } catch (error) {
@@ -60,9 +59,11 @@ export async function createProduct(product: CreateUpdateProduct): Promise<void>
         if (!parsedProduct.success) {
             throw new Error(parsedProduct.error.message)
         }
-        await sql`INSERT INTO products (name, description, price, image, quantity) 
+        const r = await sql`INSERT INTO products (name, description, price, image, quantity, category) 
         VALUES (${parsedProduct.data.name}, ${parsedProduct.data.description}, 
-        ${parsedProduct.data.price}, ${parsedProduct.data.image}, ${parsedProduct.data.quantity})` 
+        ${parsedProduct.data.price}, ${parsedProduct.data.image}, ${parsedProduct.data.quantity}, ${parsedProduct.data.category})` 
+        revalidatePath("/dashboard/products")
+        revalidatePath("/")
     } catch (error) { 
         console.log(error)
     }
@@ -76,8 +77,12 @@ export async function updateProduct(id: string, product: CreateUpdateProduct): P
         }
         await sql`UPDATE products SET 
         name=${parsedProduct.data.name}, description=${parsedProduct.data.description}, 
-        price=${parsedProduct.data.price}, image=${parsedProduct.data.image}, quantity=${parsedProduct.data.quantity} 
+        price=${parsedProduct.data.price}, image=${parsedProduct.data.image}, quantity=${parsedProduct.data.quantity}, category=${parsedProduct.data.category} 
         WHERE id=${id}`
+         revalidatePath("/dashboard/products")
+         revalidatePath(`/dashboard/products/edit/${id}`)
+         revalidatePath("/")
+         revalidatePath(`/products/${id}`)
     } catch (error) { 
         console.log(error)
     }
@@ -86,6 +91,8 @@ export async function updateProduct(id: string, product: CreateUpdateProduct): P
 export async function deleteProduct(id: string): Promise<void>{
     try {
         await sql`DELETE FROM products WHERE id=${id}`
+        revalidatePath(`/dashboard/products`)
+        revalidatePath("/")
     } catch (error) {
         console.log(error)
     }

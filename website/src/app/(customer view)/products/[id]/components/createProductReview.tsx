@@ -23,7 +23,7 @@ export default function CreateProductReview(props: {
     if (!canReviewProduct) return null;
 
     function handleAction() {
-        reviewProductForCurrentUser(props.productId, review, rating).then((result) => { 
+        reviewProductForCurrentUser(props.productId, review, rating).then((result) => {
             if (result.success) {
                 snack.showSnackBar("Review submitted", "success")
             } else {
@@ -34,7 +34,14 @@ export default function CreateProductReview(props: {
 
     return (
         <>
-     
+            <Sheet
+                variant="soft"
+                sx={{
+                    borderRadius: "sm",
+                    padding: "2rem",
+                    gridArea: "CreateReview",
+                }}>
+
                 <Typography level="h3">
                     Create a review
                 </Typography>
@@ -57,7 +64,7 @@ export default function CreateProductReview(props: {
                         <Button type="submit">Submit </Button>
                     </Stack>
                 </form>
-
+            </Sheet>
         </>
 
     )
