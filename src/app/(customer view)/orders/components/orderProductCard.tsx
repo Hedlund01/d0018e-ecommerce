@@ -1,14 +1,14 @@
 "use client"
-import { useCart } from "@/providers/CartProvider"
+import { OrderLine } from "@/types/order_line"
 import { Product } from "@/types/products"
 import { AspectRatio, Card, CardContent, CardOverflow, Typography } from "@mui/joy"
 import Image from "next/image"
 import Link from "next/link"
 import { numericFormatter } from "react-number-format"
-export default function OrderProductCard({ product }: {
-    product: Product
+export default function OrderProductCard({ product, orderLine }: {
+    product: Product;
+    orderLine: OrderLine;
 }) {
-    const cart = useCart();
     return (
         <Card sx={{ boxShadow: 'lg' }} >
             <CardOverflow>
@@ -33,13 +33,13 @@ export default function OrderProductCard({ product }: {
                         </Typography>
 
                         <Typography level="body-md">
-                            Quantity: {product.quantity}
+                            Quantity: {orderLine.quantity}
                         </Typography>
                         <Typography
                             level="body-md"
                         >
                             price: {
-                                numericFormatter(product.price.toString(), {
+                                numericFormatter(orderLine.price.toString(), {
                                     thousandSeparator: ' ',
                                     suffix: ' SEK',
                                 })

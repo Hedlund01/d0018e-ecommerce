@@ -28,14 +28,14 @@ function Row(props: {
                 orderLines.forEach((orderLine) => {
                     getProduct(orderLine.productid.toString()).then((product) => {
                         if (product !== undefined) {
-                            setProducts([...products, product])
+                            setProducts((products) => [...products, product])
                         }
                     })
                 })
             })
         }
     }, [open])
-
+    
     return (
         <>
             <Accordion
@@ -57,15 +57,21 @@ function Row(props: {
                             thousandSeparator: " ",
                         })}</Typography>
                         <Typography level="h4">Status: {order.status}</Typography>
+                        <Typography level="h4">Total quantity: {order.totalQuantity}</Typography>
 
                     </Stack>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Stack direction="row" spacing={2}>
                         {
-                            products.map((product, index) => (
-                                <OrderProductCard key={index} product={product} />
-                            ))
+                            orderLines.map((orderLine, index) => {
+                                const product = products.find((product) => product.id === orderLine.productid)
+                                if (product === undefined) return null
+                                return (
+                                    <OrderProductCard key={index} product={product} orderLine={orderLine} />
+                                )
+                            }
+                            )
                         }
                     </Stack>
                 </AccordionDetails>
