@@ -7,7 +7,7 @@ export default async function CheckoutCart() {
     const cart = await getCartDB();
     console.log(cart);
     if (cart.length === 0) {
-        redirect("/products")
+        redirect("/")
     }
     return (
         <Sheet
